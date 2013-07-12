@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 19-06-2013 11:53:20 by Larry Kite, larrykite>
+;; Time-stamp: <Last changed 12-07-2013 12:46:50 by Larry Kite, larrykite>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -19,7 +19,8 @@
        '(auto-complete
          ein
          jedi
-         undo-tree)
+         undo-tree
+         doremi)
        (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get 'sync my-el-get-packages)
@@ -87,15 +88,15 @@
 (require 'undo-tree)
 (global-undo-tree-mode)
 (ido-mode 1)
-
+(require 'doremi)
 (require 'switch-window)
 (require 'buffer-move)
 
-(require 'whitespace)
-(setq whitespace-line-column 80)
-(setq whitespace-style '(face lines-tail))
-;;(add-hook 'prog-mode-hook 'whitespace-mode)
-(global-whitespace-mode +1)
+;; (require 'whitespace)
+;; (setq whitespace-line-column 80)
+;; (setq whitespace-style '(face lines-tail))
+;; ;;(add-hook 'prog-mode-hook 'whitespace-mode)
+;; (global-whitespace-mode +1)
 
 (require 'key-chord)
 (key-chord-mode 1)
@@ -146,6 +147,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("ca3bf8a7c831776c77d09ded89f2f0993dbdd9cb0765d8db061d1ebff806f41c" "c377a5f3548df908d58364ec7a0ee401ee7235e5e475c86952dc8ed7c4345d8e" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "8c5ffc9848db0f9ad4e296fa3cba7f6ea3b0e4e00e8981a59592c99d21f99471" "7bc53c2f13ad0de4f1df240fde8fe3d5f11989944c69f9e02f2bd3da9ebbdcd9" default)))
  '(ein:use-auto-complete t)
  '(ein:use-auto-complete-superpack t)
  '(ido-create-new-buffer (quote never))
