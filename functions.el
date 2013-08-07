@@ -4,6 +4,22 @@
 ;;
 ;;
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file  modified
+
+
+(defun change-frame-width (n)
+  (interactive "p")
+  (set-frame-width (selected-frame) (if (eq n 1) 80 n)))
+
+(global-set-key (kbd "C-c w") 'change-frame-width)
+
+
+(defun change-frame-height (n)
+  (interactive "p")
+  (set-frame-height (selected-frame) (if (eq n 1) 40 n)))
+
+(global-set-key (kbd "C-c h") 'change-frame-height)
+
+
 (defun rename-file-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive

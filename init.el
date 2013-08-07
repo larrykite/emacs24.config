@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 19-06-2013 11:53:20 by Larry Kite, larrykite>
+;; Time-stamp: <Last changed 07-08-2013 16:27:41 by Larry Kite, larry>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -92,7 +92,7 @@
 (require 'buffer-move)
 
 (require 'whitespace)
-(setq whitespace-line-column 80)
+(setq whitespace-line-column 96)
 (setq whitespace-style '(face lines-tail))
 ;;(add-hook 'prog-mode-hook 'whitespace-mode)
 (global-whitespace-mode +1)
@@ -107,6 +107,9 @@
 (key-chord-define-global "JJ" 'switch-to-previous-buffer)
 (key-chord-define-global ",." 'ibuffer)
 (add-hook 'before-save-hook 'whitespace-cleanup)
+
+(require 'yasnippet)
+(yas-global-mode 1)
 
 ;; store all backup and autosave files in the tmp dir
 (setq backup-directory-alist
@@ -138,8 +141,12 @@
                                 (interactive)
                                 (other-window -1)))
 
-(electric-indent-mode +1)
+(global-set-key (kbd "RET") 'newline-and-indent)
 
+;;(electric-indent-mode +1)
+(defalias 'qrr 'query-replace-regexp)
+(set-frame-height (selected-frame) 52)
+(set-frame-width (selected-frame) 130)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
