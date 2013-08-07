@@ -1,7 +1,8 @@
-;; Time-stamp: <Last changed 12-07-2013 12:46:50 by Larry Kite, larrykite>
+;; Time-stamp: <Last changed 07-08-2013 16:52:43 by Larry Kite, larrykite>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
 (setq el-get-user-package-directory "~/.emacs.d/el-get-init-files")
 
 (unless (require 'el-get nil 'noerror)
@@ -140,7 +141,9 @@
                                 (other-window -1)))
 
 (electric-indent-mode +1)
-
+(setq scroll-preserve-screen-position t)
+(set-frame-height (selected-frame) 52)
+(set-frame-width (selected-frame) 130)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
