@@ -4,3 +4,7 @@ elpa/
 places
 backups/
 ac-comphist.dat
+auto-save-list/
+ido.last
+recentf
+

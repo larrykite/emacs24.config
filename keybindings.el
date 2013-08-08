@@ -3,7 +3,7 @@
 ;;
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
 (global-set-key (kbd "C-x C") 'ibuffer)
- 1(global-set-key (kbd "C-x B") 'ibuffer)
+(global-set-key (kbd "C-x B") 'ibuffer)
 (global-set-key (kbd "<C-S-up>")     'buf-move-up)
 (global-set-key (kbd "<C-S-down>")   'buf-move-down)
 (global-set-key (kbd "<C-S-left>")   'buf-move-left)
@@ -12,7 +12,7 @@
 (global-set-key (kbd "M-;") 'win-swap)
 (global-set-key (kbd "C-`") 'push-mark-no-activate)
 (global-set-key (kbd "M-`") 'jump-to-mark)
-
+(global-set-key (kbd "C-S-v") 'scroll-down-command)
 (global-set-key [C-tab]     'yic-next-buffer)
 (global-set-key [C-S-iso-lefttab]     'yic-prev-buffer)
 (global-set-key [home] 'beginning-of-line)
