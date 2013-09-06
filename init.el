@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 07-08-2013 16:27:41 by Larry Kite, larry>
+;; Time-stamp: <Last changed 15-08-2013 17:16:31 by Larry Kite, larry>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -68,7 +68,7 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
-
+(setq jedi:key-complete (kbd "C-c ."))
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 (global-auto-revert-mode 1)
 (delete-selection-mode t)
