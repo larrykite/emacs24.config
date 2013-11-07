@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 15-08-2013 17:16:31 by Larry Kite, larry>
+;; Time-stamp: <Last changed 02-10-2013 14:40:38 by Larry Kite, larry>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -11,7 +11,6 @@
     (let (el-get-master-branch)
       (goto-char (point-max))
       (eval-print-last-sexp))))
-
 
 ; list all packages you want installed
 (setq my-el-get-packages
@@ -33,37 +32,34 @@
 
 (defvar my-packages '(starter-kit
                       starter-kit-bindings
-                      yasnippet
                       ace-jump-mode
                       ack-and-a-half
-                      magit
-                      melpa
-                      solarized-theme
-                      switch-window
-                      smex
-                      key-chord
-                      buffer-move
-                      ido-ubiquitous
-                      buffer-move
-                      idle-highlight-mode
                       browse-kill-ring
+                      buffer-move
                       deft
                       dired+
+                      dropdown-list
                       expand-region
+                      idle-highlight-mode
+                      ido-ubiquitous
                       ido-vertical-mode
+                      key-chord
+                      magit
+                      melpa
+                      multiple-cursors
                       naquadah-theme
                       rainbow-delimiters
-                      soothe-theme
-                      dropdown-list
+                      smex
+                      solarized-theme
+                      switch-window
+                      yasnippet
                       zenburn-theme)
-
 
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
-
 
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)
@@ -76,6 +72,12 @@
 (set-language-environment "utf-8")
 (add-hook 'before-save-hook 'time-stamp)
 (setq time-stamp-pattern nil)
+(setq
+ time-stamp-active t          ; do enable time-stamps
+ time-stamp-line-limit 10     ; check first 10 buffer lines for Time-stamp: <>
+ time-stamp-format "Last changed %02d-%02m-%04y %02H:%02M:%02S by %L, %u") ; date format
+(add-hook 'write-file-hooks 'time-stamp) ; update when saving
+
 (setq-default default-tab-width 4)
 
 (setq lmk-functions-file "~/.emacs.d/functions.el")
@@ -83,7 +85,17 @@
 (load lmk-functions-file)
 (load lmk-keybindings-file)
 
-(load-theme 'zenburn t)
+;;(load-theme 'zenburn t)
+;;(load-theme 'base16-mocha t)
+(load-theme 'base16-chalk t)
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
 (require 'undo-tree)
 (global-undo-tree-mode)
 (ido-mode 1)
@@ -97,9 +109,10 @@
 ;;(add-hook 'prog-mode-hook 'whitespace-mode)
 (global-whitespace-mode +1)
 
+(winner-mode 1)
+
 (require 'key-chord)
 (key-chord-mode 1)
-
 (key-chord-define-global "jk" 'end-of-buffer)
 (key-chord-define-global "gb" 'beginning-of-buffer)
 (key-chord-define-global "FF" 'find-file)
@@ -153,6 +166,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("de2c46ed1752b0d0423cde9b6401062b67a6a1300c068d5d7f67725adc6c3afb" "978ff9496928cc94639cb1084004bf64235c5c7fb0cfbcc38a3871eb95fa88f6" "41b6698b5f9ab241ad6c30aea8c9f53d539e23ad4e3963abff4b57c0f8bf6730" "9bac44c2b4dfbb723906b8c491ec06801feb57aa60448d047dbfdbd1a8650897" "405fda54905200f202dd2e6ccbf94c1b7cc1312671894bc8eca7e6ec9e8a41a2" "51bea7765ddaee2aac2983fac8099ec7d62dff47b708aa3595ad29899e9e9e44" "3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "8c5ffc9848db0f9ad4e296fa3cba7f6ea3b0e4e00e8981a59592c99d21f99471" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(ein:use-auto-complete t)
  '(ein:use-auto-complete-superpack t)
  '(ido-create-new-buffer (quote never))
@@ -160,7 +176,9 @@
  '(ido-everywhere t)
  '(ido-file-extensions-order (quote (".py" ".el" ".sh")))
  '(ido-show-dot-for-dired t)
- '(ido-use-filename-at-point (quote guess)))
+ '(ido-use-filename-at-point (quote guess))
+ '(menu-bar-mode nil)
+ '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -1,3 +1,4 @@
+;; Time-stamp: <Last changed 26-09-2013 12:46:15 by Larry Kite, larry>
 ;; Last changed:
 ;; Defined Functions
 ;;
