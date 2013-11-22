@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 02-10-2013 14:40:38 by Larry Kite, larry>
+;; Time-stamp: <Last changed 21-11-2013 17:18:01 by Larry Kite, larry>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -53,7 +53,8 @@
                       solarized-theme
                       switch-window
                       yasnippet
-                      zenburn-theme)
+                      zenburn-theme
+                      ess)
 
   "A list of packages to ensure are installed at launch.")
 
@@ -185,3 +186,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'upcase-region 'disabled nil)

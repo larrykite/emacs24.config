@@ -29,7 +29,7 @@
 (global-set-key (kbd "M-<down>") 'move-line-down)
 ;;(global-set-key (kbd "C-z") 'shell)
 ;;(global-set-key (kbd "C-x p") 'compile)
-(global-set-key (kbd "C-x y") 'switch-kill)
+(global-set-key (kbd "C-x y") 'upcase-word)
 
 ;; Meta
 (global-set-key "\M- " 'set-mark-command)
