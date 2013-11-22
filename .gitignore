@@ -9,3 +9,7 @@ ido.last
 recentf
 request/
 url/
+session.*
+tramp
+eshell/
+.mc-lists.el
