@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 07-08-2013 16:52:43 by Larry Kite, larrykite>
+;; Time-stamp: <Last changed 30-10-2013 18:31:33 by Larry Kite, larrykite>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -92,7 +92,7 @@
 (require 'doremi)
 (require 'switch-window)
 (require 'buffer-move)
-
+(require 'dired-x)
 
 (require 'whitespace)
 (setq whitespace-line-column 96)
@@ -157,15 +157,19 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("ca3bf8a7c831776c77d09ded89f2f0993dbdd9cb0765d8db061d1ebff806f41c" "c377a5f3548df908d58364ec7a0ee401ee7235e5e475c86952dc8ed7c4345d8e" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "8c5ffc9848db0f9ad4e296fa3cba7f6ea3b0e4e00e8981a59592c99d21f99471" "7bc53c2f13ad0de4f1df240fde8fe3d5f11989944c69f9e02f2bd3da9ebbdcd9" default)))
+ '(custom-safe-themes (quote ("fc6e906a0e6ead5747ab2e7c5838166f7350b958d82e410257aeeb2820e8a07a" "ca3bf8a7c831776c77d09ded89f2f0993dbdd9cb0765d8db061d1ebff806f41c" "c377a5f3548df908d58364ec7a0ee401ee7235e5e475c86952dc8ed7c4345d8e" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "8c5ffc9848db0f9ad4e296fa3cba7f6ea3b0e4e00e8981a59592c99d21f99471" "7bc53c2f13ad0de4f1df240fde8fe3d5f11989944c69f9e02f2bd3da9ebbdcd9" default)))
  '(ein:use-auto-complete t)
  '(ein:use-auto-complete-superpack t)
+ '(fci-rule-color "#383838")
  '(ido-create-new-buffer (quote never))
  '(ido-enable-flex-matching t)
  '(ido-everywhere t)
  '(ido-file-extensions-order (quote (".py" ".el" ".sh")))
  '(ido-show-dot-for-dired t)
- '(ido-use-filename-at-point (quote guess)))
+ '(ido-use-filename-at-point (quote guess))
+ '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-color-map (quote ((20 . "#BC8383") (40 . "#CC9393") (60 . "#DFAF8F") (80 . "#D0BF8F") (100 . "#E0CF9F") (120 . "#F0DFAF") (140 . "#5F7F5F") (160 . "#7F9F7F") (180 . "#8FB28F") (200 . "#9FC59F") (220 . "#AFD8AF") (240 . "#BFEBBF") (260 . "#93E0E3") (280 . "#6CA0A3") (300 . "#7CB8BB") (320 . "#8CD0D3") (340 . "#94BFF3") (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
