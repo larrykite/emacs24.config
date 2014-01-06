@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 30-10-2013 18:31:33 by Larry Kite, larrykite>
+;; Time-stamp: <Last changed 06-01-2014 08:29:19 by Larry Kite, larrykite>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -39,7 +39,6 @@
                       ace-jump-mode
                       ack-and-a-half
                       magit
-                      melpa
                       solarized-theme
                       switch-window
                       smex
