@@ -13,3 +13,5 @@ url/
 tramp
 eshell/
 .mc-lists.el
+.gitignore.*
+*.orig
