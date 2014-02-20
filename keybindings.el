@@ -13,8 +13,10 @@
 (global-set-key (kbd "C-`") 'push-mark-no-activate)
 (global-set-key (kbd "M-`") 'jump-to-mark)
 (global-set-key (kbd "C-S-v") 'scroll-down-command)
-(global-set-key [C-tab]     'yic-next-buffer)
-(global-set-key [C-S-iso-lefttab]     'yic-prev-buffer)
+(global-set-key [s-tab]     'yic-next-buffer)
+(global-set-key [s-S-iso-lefttab]     'yic-prev-buffer)
+;; (global-set-key [C-tab]     'yic-next-buffer)
+;; (global-set-key [C-S-iso-lefttab]     'yic-prev-buffer)
 (global-set-key [home] 'beginning-of-line)
 (global-set-key [end] 'end-of-line)
 (global-set-key [C-home] 'beginning-of-buffer)
@@ -29,7 +31,7 @@
 (global-set-key (kbd "M-<down>") 'move-line-down)
 ;;(global-set-key (kbd "C-z") 'shell)
 ;;(global-set-key (kbd "C-x p") 'compile)
-(global-set-key (kbd "C-x y") 'switch-kill)
+(global-set-key (kbd "C-x y") 'upcase-word)
 
 ;; Meta
 (global-set-key "\M- " 'set-mark-command)
@@ -43,22 +45,22 @@
 (global-set-key [f1] 'manual-entry)
 (global-set-key [f2] 'info)
 (global-set-key [f3] 'repeat-complex-command)
-(global-set-key [f4] 'advertised-undo)
-(global-set-key [f5] 'eval-current-buffer)
-(global-set-key [f6] 'buffer-menu)
-(global-set-key [f7] 'other-window)
-(global-set-key [f8] 'find-file)
+;;(global-set-key [f4] 'advertised-undo)
+(global-set-key [f5] "\C-u1\C-v")
+(global-set-key [f6] "\C-u1\M-v")
+;;(global-set-key [f7] 'other-window)
+;;(global-set-key [f8] 'find-file)
 (global-set-key [f9] 'kmacro-start-macro-or-insert-counter)
-(global-set-key [f10] 'next-error)
+;;(global-set-key [f10] 'next-error)
 (global-set-key [f11] 'fullscreen)
 (global-set-key [f12] 'grep)
-(global-set-key [C-f1] 'compile)
-(global-set-key [C-f2] 'grep)
-(global-set-key [C-f3] 'next-error)
-(global-set-key [C-f4] 'previous-error)
-(global-set-key [C-f5] 'display-faces)
-(global-set-key [C-f8] 'dired)
-(global-set-key [C-f10] 'kill-compilation)
+;;(global-set-key [C-f1] 'compile)
+;;(global-set-key [C-f2] 'grep)
+;;(global-set-key [C-f3] 'next-error)
+;;(global-set-key [C-f4] 'previous-error)
+;;(global-set-key [C-f5] 'display-faces)
+;;(global-set-key [C-f8] 'dired)
+;;(global-set-key [C-f10] 'kill-compilation)
 
 ;; Keypad bindings
 (global-set-key [up] "\C-p")
@@ -130,7 +132,7 @@ Don't mess with special buffers."
   (browse-url
    (concat
     "http://www.google.com/search?ie=utf-8&oe=utf-8&q="
-    (url-hexify-string (if mark-ctive
+    (url-hexify-string (if mark-active
          (buffer-substring (region-beginning) (region-end))
          (read-string "Google: "))))))
 
