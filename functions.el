@@ -382,8 +382,6 @@ Repeated invocations toggle between the two most recently open buffers."
     (when file
       (find-file file))))
 
-
-
 (defun delete-file-and-buffer ()
   "Kill the current buffer and deletes the file it is visiting."
   (interactive)

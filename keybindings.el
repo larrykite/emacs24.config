@@ -20,7 +20,9 @@
 (global-set-key [C-home] 'beginning-of-buffer)
 (global-set-key [C-end] 'end-of-buffer)
 (global-set-key (kbd "C-c c") 'comment-region)   ;; make C-c C-c and C-c C-u work
-(global-set-key (kbd "C-c C-c") 'comment-region)   ;; make C-c C-c and C-c C-u work
+(global-set-key (kbd "C-c C-c") 'comment-region)   ;; make C-c C-c and
+;; C-c C-u work
+(global-set-key (kbd "C-c m") 'remember) 
 (global-set-key (kbd "C-c u") 'uncomment-region) ;; for comment/uncomment region in all modes
 (global-set-key (kbd "C-c C-u") 'uncomment-region) ;; for comment/uncomment region in all modes
 (global-set-key (kbd "M-<up>") 'move-line-up)
