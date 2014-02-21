@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 20-02-2014 12:37:42 by Larry Kite, larrykite>
+;; Time-stamp: <Last changed 20-02-2014 16:10:08 by Larry Kite, larrykite>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -164,6 +164,11 @@
 
 (set-frame-height (selected-frame) 52)
 (set-frame-width (selected-frame) 130)
+
+(fset 'resize-main-frame
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([67108917 67108915 3 104 67108913 67108915 67108912 3 119] 0 "%d")) arg)))
+(global-set-key (kbd "C-c z") 'resize-main-frame)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
