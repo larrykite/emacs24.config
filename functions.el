@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 15-01-2014 07:56:56 by Larry Kite, larry>
+;; Time-stamp: <Last changed 26-03-2014 15:45:42 by Larry Kite, larry>
 ;; Last changed:
 ;; Defined Functions
 ;;
@@ -177,11 +177,11 @@ print a message in the minibuffer with the result."
 	(setq count (1+ count)))
       (message "buffer contains %d words." count))))
 
-(defun win-swap () 
-  "Swap windows using buffer-move.el" 
-  (interactive) 
-  (if (null (windmove-find-other-window 'right)) 
-      (buf-move-left) 
+(defun win-swap ()
+  "Swap windows using buffer-move.el"
+  (interactive)
+  (if (null (windmove-find-other-window 'right))
+      (buf-move-left)
     (buf-move-right)))
 
 (defun fullscreen ()
@@ -202,18 +202,19 @@ print a message in the minibuffer with the result."
   (interactive)
   (set-buffer-file-coding-system 'iso-latin-1-mac t))
 
-(defun save-macro (name)                  
-  "save a macro. Take a name as argument
-     and save the last defined macro under 
+
+ (defun save-macro (name)
+    "save a macro. Take a name as argument
+     and save the last defined macro under
      this name at the end of your .emacs"
-  (interactive "SName of the macro :")  ; ask for the name of the macro    
-  (kmacro-name-last-macro name)         ; use this name for the macro    
-  (find-file user-init-file)                   ; open ~/.emacs or other user init file 
-  (goto-char (point-max))               ; go to the end of the .emacs
-  (newline)                             ; insert a newline
-  (insert-kbd-macro name)               ; copy the macro 
-  (newline)                             ; insert a newline
-  (switch-to-buffer nil))               ; return to the initial buffer
+    (interactive "SName of the macro :")  ; ask for the name of the macro    
+    (kmacro-name-last-macro name)         ; use this name for the macro    
+    (find-file user-init-file)                   ; open ~/.emacs or other user init file 
+    (goto-char (point-max))               ; go to the end of the .emacs
+    (newline)                             ; insert a newline
+    (insert-kbd-macro name)               ; copy the macro 
+    (newline)                             ; insert a newline
+    (switch-to-buffer nil))               ; return to the initial buffer
 
 (defun kill-start-of-line ()
   "Kill characters from point to beginning of line"
@@ -381,8 +382,6 @@ Repeated invocations toggle between the two most recently open buffers."
     (when file
       (find-file file))))
 
-
-
 (defun delete-file-and-buffer ()
   "Kill the current buffer and deletes the file it is visiting."
   (interactive)
@@ -394,3 +393,25 @@ Repeated invocations toggle between the two most recently open buffers."
           (delete-file filename)
           (message "Deleted file %s" filename)
           (kill-buffer))))))
+
+(defun eval-and-replace ()
+  "Replace the preceding sexp with its value."
+  (interactive)
+  (backward-kill-sexp)
+  (condition-case nil
+      (prin1 (eval (read (current-kill 0)))
+             (current-buffer))
+    (error (message "Invalid expression")
+           (insert (current-kill 0)))))
+
+(defun find-shell-init-file ()
+  "Edit the shell init file in another window."
+  (interactive)
+  (let* ((shell (car (reverse (split-string (getenv "SHELL") "/"))))
+         (shell-init-file (cond
+                           ((string-equal "zsh" shell) ".zshrc")
+                           ((string-equal "bash" shell) ".bashrc")
+                           (t (error "Unknown shell")))))
+    (find-file-other-window (expand-file-name shell-init-file (getenv "HOME")))))
+
+(global-set-key (kbd "C-c S") 'find-shell-init-file)

@@ -1,4 +1,5 @@
-;; Time-stamp: <Last changed 24-03-2014 08:46:46 by Larry Kite, larry>
+
+;; Time-stamp: <Last changed 26-03-2014 15:47:51 by Larry Kite, larry>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -21,14 +22,15 @@
        '(auto-complete
          ein
          jedi
-         undo-tree)
+         undo-tree
+         doremi)
        (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get 'sync my-el-get-packages)
-
+(require 'package)
 ;; Configure elpa
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -93,6 +95,7 @@
 (load-theme 'zenburn t)
 ;;(load-theme 'base16-mocha t)
 ;;(load-theme 'base16-chalk t)
+
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -104,9 +107,10 @@
 (require 'undo-tree)
 (global-undo-tree-mode)
 (ido-mode 1)
-
+(require 'doremi)
 (require 'switch-window)
 (require 'buffer-move)
+(require 'dired-x)
 
 (require 'whitespace)
 (setq whitespace-line-column 96)
@@ -157,10 +161,11 @@
                                 (interactive)
                                 (other-window -1)))
 
+(setq scroll-preserve-screen-position t)
 (global-set-key (kbd "RET") 'newline-and-indent)
 
-;;(electric-indent-mode +1)
 (defalias 'qrr 'query-replace-regexp)
+
 (set-frame-height (selected-frame) 52)
 (set-frame-width (selected-frame) 130)
 
@@ -172,31 +177,36 @@
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+
  '(custom-safe-themes
    (quote
     ("e53cc4144192bb4e4ed10a3fa3e7442cae4c3d231df8822f6c02f1220a0d259a" "e80a0a5e1b304eb92c58d0398464cd30ccbc3622425b6ff01eea80e44ea5130e" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "ae8d0f1f36460f3705b583970188e4fbb145805b7accce0adb41031d99bd2580" "1affe85e8ae2667fb571fc8331e1e12840746dae5c46112d5abb0c3a973f5f5a" "7694bfb46ec19cfc47093783633d8cd4df208d620104910bf5c1c840528a8dd1" "de2c46ed1752b0d0423cde9b6401062b67a6a1300c068d5d7f67725adc6c3afb" "978ff9496928cc94639cb1084004bf64235c5c7fb0cfbcc38a3871eb95fa88f6" "41b6698b5f9ab241ad6c30aea8c9f53d539e23ad4e3963abff4b57c0f8bf6730" "9bac44c2b4dfbb723906b8c491ec06801feb57aa60448d047dbfdbd1a8650897" "405fda54905200f202dd2e6ccbf94c1b7cc1312671894bc8eca7e6ec9e8a41a2" "51bea7765ddaee2aac2983fac8099ec7d62dff47b708aa3595ad29899e9e9e44" "3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "8c5ffc9848db0f9ad4e296fa3cba7f6ea3b0e4e00e8981a59592c99d21f99471" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(deft-directory "/home/larry/Dropbox/deft/")
  '(ein:use-auto-complete t)
  '(ein:use-auto-complete-superpack t)
+ '(fci-rule-color "#383838")
  '(ido-create-new-buffer (quote never))
  '(ido-enable-flex-matching t)
  '(ido-everywhere t)
  '(ido-file-extensions-order (quote (".py" ".el" ".sh")))
  '(ido-show-dot-for-dired t)
  '(ido-use-filename-at-point (quote guess))
- '(menu-bar-mode nil)
- '(winner-mode t))
+ '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-color-map (quote ((20 . "#BC8383") (40 . "#CC9393") (60 . "#DFAF8F") (80 . "#D0BF8F") (100 . "#E0CF9F") (120 . "#F0DFAF") (140 . "#5F7F5F") (160 . "#7F9F7F") (180 . "#8FB28F") (200 . "#9FC59F") (220 . "#AFD8AF") (240 . "#BFEBBF") (260 . "#93E0E3") (280 . "#6CA0A3") (300 . "#7CB8BB") (320 . "#8CD0D3") (340 . "#94BFF3") (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
 (put 'upcase-region 'disabled nil)
 
 (fset 'resize-main-frame
