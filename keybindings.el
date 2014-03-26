@@ -172,3 +172,4 @@ Position the cursor at its beginning, according to the current mode."
   (newline-and-indent))
 
 (global-set-key [(shift return)] 'smart-open-line)
+(global-set-key [f8] 'deft)

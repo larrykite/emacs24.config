@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 26-09-2013 12:46:15 by Larry Kite, larry>
+;; Time-stamp: <Last changed 15-01-2014 07:56:56 by Larry Kite, larry>
 ;; Last changed:
 ;; Defined Functions
 ;;
@@ -208,7 +208,7 @@ print a message in the minibuffer with the result."
      this name at the end of your .emacs"
   (interactive "SName of the macro :")  ; ask for the name of the macro    
   (kmacro-name-last-macro name)         ; use this name for the macro    
-  (find-file (user-init-file))                   ; open ~/.emacs or other user init file 
+  (find-file user-init-file)                   ; open ~/.emacs or other user init file 
   (goto-char (point-max))               ; go to the end of the .emacs
   (newline)                             ; insert a newline
   (insert-kbd-macro name)               ; copy the macro 
