@@ -1,5 +1,5 @@
 
-;; Time-stamp: <Last changed 26-03-2014 15:47:51 by Larry Kite, larry>
+;; Time-stamp: <Last changed 31-03-2014 17:21:37 by Larry Kite, larry>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -103,7 +103,7 @@
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
-
+(setq undo-tree-mode-lighter "")
 (require 'undo-tree)
 (global-undo-tree-mode)
 (ido-mode 1)
