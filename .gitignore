@@ -15,3 +15,5 @@ eshell/
 .mc-lists.el
 .gitignore.*
 *.orig
+session\.*
+.python-environments/
