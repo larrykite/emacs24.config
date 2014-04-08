@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 20-02-2014 16:10:08 by Larry Kite, larrykite>
+;; Time-stamp: <Last changed 04-03-2014 18:59:14 by Larry Kite, larrykite>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -42,6 +42,7 @@
                       dired+
                       dropdown-list
                       expand-region
+                      helm
                       idle-highlight-mode
                       ido-ubiquitous
                       ido-vertical-mode
@@ -147,7 +148,7 @@
 (setq recentf-max-saved-items 200
       recentf-max-menu-items 15)
 (recentf-mode +1)
-
+(helm-mode 1)
 (global-set-key (kbd "C-x C-r") 'recentf-ido-find-file)
 (global-set-key (kbd "C-c D") 'delete-file-and-buffer)
 
