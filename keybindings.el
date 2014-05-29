@@ -15,15 +15,13 @@
 (global-set-key (kbd "C-S-v") 'scroll-down-command)
 (global-set-key [s-tab]     'yic-next-buffer)
 (global-set-key [s-S-iso-lefttab]     'yic-prev-buffer)
-;; (global-set-key [C-tab]     'yic-next-buffer)
-;; (global-set-key [C-S-iso-lefttab]     'yic-prev-buffer)
+
 (global-set-key [home] 'beginning-of-line)
 (global-set-key [end] 'end-of-line)
 (global-set-key [C-home] 'beginning-of-buffer)
 (global-set-key [C-end] 'end-of-buffer)
 (global-set-key (kbd "C-c c") 'comment-region)   ;; make C-c C-c and C-c C-u work
-(global-set-key (kbd "C-c C-c") 'comment-region)   ;; make C-c C-c and
-;; C-c C-u work
+(global-set-key (kbd "C-c C-c") 'comment-region) ;; make C-c C-c and C-c C-u work
 (global-set-key (kbd "C-c m") 'remember) 
 (global-set-key (kbd "C-c u") 'uncomment-region) ;; for comment/uncomment region in all modes
 (global-set-key (kbd "C-c C-u") 'uncomment-region) ;; for comment/uncomment region in all modes
@@ -113,17 +111,17 @@ Don't mess with special buffers."
 
 (global-set-key (kbd "C-c k") 'kill-other-buffers)
 
-(defun visit-term-buffer ()
-  "Create or visit a terminal buffer."
-  (interactive)
-  (if (not (get-buffer "*ansi-term*"))
-      (progn
-        (split-window-sensibly (selected-window))
-        (other-window 1)
-        (ansi-term (getenv "SHELL")))
-    (switch-to-buffer-other-window "*ansi-term*")))
+;; (defun visit-term-buffer ()
+;;   "Create or visit a terminal buffer."
+;;   (interactive)
+;;   (if (not (get-buffer "*ansi-term*"))
+;;       (progn
+;;         (split-window-sensibly (selected-window))
+;;         (other-window 1)
+;;         (ansi-term (getenv "SHELL")))
+;;     (switch-to-buffer-other-window "*ansi-term*")))
 
-(global-set-key (kbd "C-c t") 'visit-term-buffer)
+;;(global-set-key (kbd "C-c t") 'visit-term-buffer)
 
 
 (defun google ()
@@ -175,3 +173,8 @@ Position the cursor at its beginning, according to the current mode."
 
 (global-set-key [(shift return)] 'smart-open-line)
 (global-set-key [f8] 'deft)
+;; Fixing a key binding bug in elpy
+(define-key yas-minor-mode-map (kbd "C-c ;") 'yas-expand)
+;; Fixing another key binding bug in iedit mode
+(define-key global-map (kbd "C-c o") 'iedit-mode)
+(global-set-key (kbd "C-x o") 'switch-window)

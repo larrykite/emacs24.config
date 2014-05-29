@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 31-03-2014 17:07:06 by Larry Kite, larry>
+;; Time-stamp: <Last changed 07-04-2014 17:49:48 by Larry Kite, larry>
 ;; Last changed:
 ;; Defined Functions
 ;;
@@ -355,6 +355,8 @@ the current buffer."
                          (ansi-term (getenv "SHELL")))
                       "*ansi-term*"))
 
+(global-set-key (kbd "C-c t") 'visit-term-buffer)
+
 (defun visit-ielm ()
   "Switch to default `ielm' buffer.
 Start `ielm' if it's not already running."
@@ -431,7 +433,7 @@ Repeated invocations toggle between the two most recently open buffers."
     (emacs-lisp-mode)
     ))
 
-(global-set-key (kbd "C-c C-s") 'create-scratch-buffer)
+(global-set-key (kbd "C-c C-x C-b") 'create-scratch-buffer)
 
 
 (defun toggle-window-split ()

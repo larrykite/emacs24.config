@@ -1,10 +1,10 @@
-
-;; Time-stamp: <Last changed 31-03-2014 17:21:37 by Larry Kite, larry>
+;; Time-stamp: <Last changed 07-04-2014 17:32:25 by Larry Kite, larry>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path "~/dev/makey")
 (add-to-list 'load-path "~/dev/discover.el")
+(add-to-list 'load-path "/home/larry/.emacs.d/elpa/yasnippet-20140314.255/snippets")
 ;;(add-to-list 'load-path "~/dev/smart-scan")
 (setq el-get-user-package-directory "~/.emacs.d/el-get-init-files")
 (set-default-font "Source Code Pro")
@@ -32,6 +32,8 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
+(elpy-enable)
+(setenv "PYTHONPATH" "/usr/bin/python")
 (when (not package-archive-contents)
   (package-refresh-contents))
 
@@ -44,10 +46,14 @@
                       deft
                       dired+
                       dropdown-list
+                      elpy
                       expand-region
+                      git-gutter
+                      git-gutter-fringe
                       idle-highlight-mode
                       ido-ubiquitous
                       ido-vertical-mode
+                      jinja2-mode
                       key-chord
                       magit
                       multiple-cursors
@@ -95,25 +101,28 @@
 (load-theme 'zenburn t)
 ;;(load-theme 'base16-mocha t)
 ;;(load-theme 'base16-chalk t)
-
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-(require 'expand-region)
-(global-set-key (kbd "C-=") 'er/expand-region)
+(global-git-gutter-mode t)
+(require 'git-gutter-fringe)
+;; commented out multiple-cursors because same functionality exists as
+;; part of elpy
+;;(require 'multiple-cursors)
+;;(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+;;(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+;;(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+;;(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+;;(require 'expand-region)
+;;(global-set-key (kbd "C-=") 'er/expand-region)
 (setq undo-tree-mode-lighter "")
 (require 'undo-tree)
 (global-undo-tree-mode)
 (ido-mode 1)
-(require 'doremi)
+;; commented out doremi because I have no idea wtf it does.
+;;(require 'doremi)
 (require 'switch-window)
 (require 'buffer-move)
 (require 'dired-x)
-
 (require 'whitespace)
-(setq whitespace-line-column 96)
+(setq whitespace-line-column 80)
 (setq whitespace-style '(face lines-tail))
 ;;(add-hook 'prog-mode-hook 'whitespace-mode)
 (global-whitespace-mode +1)
@@ -173,11 +182,16 @@
 (global-discover-mode 1)
 (smartscan-mode 1)
 
-
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-
-
+;; Show the current function name in the header line
+(which-function-mode)
+(setq-default header-line-format
+              '((which-func-mode ("" which-func-format " "))))
+(setq mode-line-misc-info
+            ;; We remove Which Function Mode from the mode line, because it's mostly
+            ;; invisible here anyway.
+            (assq-delete-all 'which-func-mode mode-line-misc-info))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
