@@ -1,3 +1,4 @@
+;; Time-stamp: <Last changed 30-05-2014 08:45:40 by Larry Kite, larrykite>
 ;; Keyboard
 ;; ============
 ;;
@@ -13,10 +14,12 @@
 (global-set-key (kbd "C-`") 'push-mark-no-activate)
 (global-set-key (kbd "M-`") 'jump-to-mark)
 (global-set-key (kbd "C-S-v") 'scroll-down-command)
-(global-set-key [s-tab]     'yic-next-buffer)
-(global-set-key [s-S-iso-lefttab]     'yic-prev-buffer)
-;; (global-set-key [C-tab]     'yic-next-buffer)
-;; (global-set-key [C-S-iso-lefttab]     'yic-prev-buffer)
+(when *is-linux*
+  (global-set-key [s-tab]     'yic-next-buffer)
+  (global-set-key [s-S-iso-lefttab]     'yic-prev-buffer))
+(when *is-a-mac*
+  (global-set-key [C-tab]     'yic-next-buffer)
+  (global-set-key [C-S-iso-lefttab]     'yic-prev-buffer))
 (global-set-key [home] 'beginning-of-line)
 (global-set-key [end] 'end-of-line)
 (global-set-key [C-home] 'beginning-of-buffer)
