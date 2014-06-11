@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 07-04-2014 17:32:25 by Larry Kite, larry>
+;; Time-stamp: <Last changed 10-06-2014 17:01:30 by Larry Kite, larry>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -7,7 +7,7 @@
 (add-to-list 'load-path "/home/larry/.emacs.d/elpa/yasnippet-20140314.255/snippets")
 ;;(add-to-list 'load-path "~/dev/smart-scan")
 (setq el-get-user-package-directory "~/.emacs.d/el-get-init-files")
-(set-default-font "Source Code Pro")
+;; (set-default-font "Source Code Pro")
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
@@ -32,7 +32,6 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
-(elpy-enable)
 (setenv "PYTHONPATH" "/usr/bin/python")
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -45,6 +44,7 @@
                       buffer-move
                       deft
                       dired+
+                      discover
                       dropdown-list
                       elpy
                       expand-region
@@ -74,6 +74,7 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
+(elpy-enable)
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
