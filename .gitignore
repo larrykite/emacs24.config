@@ -17,3 +17,4 @@ eshell/
 *.orig
 session\.*
 .python-environments/
+\#*

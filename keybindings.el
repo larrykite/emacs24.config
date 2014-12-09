@@ -174,7 +174,7 @@ Position the cursor at its beginning, according to the current mode."
 (global-set-key [(shift return)] 'smart-open-line)
 (global-set-key [f8] 'deft)
 ;; Fixing a key binding bug in elpy
-(define-key yas-minor-mode-map (kbd "C-c ;") 'yas-expand)
+;;(define-key yas-minor-mode-map (kbd "C-c ;") 'yas-expand)
 ;; Fixing another key binding bug in iedit mode
 (define-key global-map (kbd "C-c o") 'iedit-mode)
 (global-set-key (kbd "C-x o") 'switch-window)
