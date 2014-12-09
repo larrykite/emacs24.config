@@ -1,10 +1,11 @@
-;; Time-stamp: <Last changed 10-06-2014 17:01:30 by Larry Kite, larry>
+;; Time-stamp: <Last changed 09-12-2014 14:41:20 by Larry Kite, larry>
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path "~/dev/makey")
 (add-to-list 'load-path "~/dev/discover.el")
 (add-to-list 'load-path "/home/larry/.emacs.d/elpa/yasnippet-20140314.255/snippets")
+(add-to-list 'load-path "/home/larry/.emacs.d/emacs-sourcegraph-mode")
 ;;(add-to-list 'load-path "~/dev/smart-scan")
 (setq el-get-user-package-directory "~/.emacs.d/el-get-init-files")
 ;; (set-default-font "Source Code Pro")
@@ -42,11 +43,15 @@
                       ack-and-a-half
                       browse-kill-ring
                       buffer-move
+                      cider
+                      clojure-mode
+                      dash
                       deft
                       dired+
                       discover
                       dropdown-list
                       elpy
+                      ess
                       expand-region
                       git-gutter
                       git-gutter-fringe
@@ -66,7 +71,7 @@
                       yasnippet
                       zenburn-theme
                       web-mode
-                      ess)
+                      )
 
   "A list of packages to ensure are installed at launch.")
 
@@ -75,14 +80,17 @@
     (package-install p)))
 
 (elpy-enable)
+(elpy-use-ipython)
 (add-hook 'python-mode-hook 'jedi:setup)
+(add-hook 'sh-mode-hook (lambda () (auto-fill-mode -1)))
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
 (setq jedi:key-complete (kbd "C-c ."))
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(global-set-key (kbd "C-c a") 'auto-fill-mode)
 (global-auto-revert-mode 1)
 (delete-selection-mode t)
-
+(require 'ess-site)
 (set-language-environment "utf-8")
 (add-hook 'before-save-hook 'time-stamp)
 (setq time-stamp-pattern nil)
@@ -99,7 +107,9 @@
 (load lmk-functions-file)
 (load lmk-keybindings-file)
 
-(load-theme 'zenburn t)
+(load-theme 'leuven t)
+
+(require 'sourcegraph-mode)
 ;;(load-theme 'base16-mocha t)
 ;;(load-theme 'base16-chalk t)
 (global-git-gutter-mode t)
@@ -127,7 +137,7 @@
 (setq whitespace-style '(face lines-tail))
 ;;(add-hook 'prog-mode-hook 'whitespace-mode)
 (global-whitespace-mode +1)
-
+(auto-fill-mode -1)
 (require 'key-chord)
 (key-chord-mode 1)
 (key-chord-define-global "jk" 'end-of-buffer)
@@ -136,6 +146,7 @@
 (key-chord-define-global "jj" 'undo-tree-visualize)
 (key-chord-define-global "JJ" 'switch-to-previous-buffer)
 (key-chord-define-global ",." 'ibuffer)
+(key-chord-define-global "AF" 'auto-fill-mode)
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 (require 'yasnippet)
@@ -176,8 +187,8 @@
 
 (defalias 'qrr 'query-replace-regexp)
 
-(set-frame-height (selected-frame) 52)
-(set-frame-width (selected-frame) 130)
+;; (set-frame-height (selected-frame) 52)
+;; (set-frame-width (selected-frame) 130)
 
 (require 'discover)
 (global-discover-mode 1)
@@ -198,11 +209,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-
+ '(company-auto-complete t)
  '(custom-safe-themes
    (quote
-    ("e53cc4144192bb4e4ed10a3fa3e7442cae4c3d231df8822f6c02f1220a0d259a" "e80a0a5e1b304eb92c58d0398464cd30ccbc3622425b6ff01eea80e44ea5130e" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "ae8d0f1f36460f3705b583970188e4fbb145805b7accce0adb41031d99bd2580" "1affe85e8ae2667fb571fc8331e1e12840746dae5c46112d5abb0c3a973f5f5a" "7694bfb46ec19cfc47093783633d8cd4df208d620104910bf5c1c840528a8dd1" "de2c46ed1752b0d0423cde9b6401062b67a6a1300c068d5d7f67725adc6c3afb" "978ff9496928cc94639cb1084004bf64235c5c7fb0cfbcc38a3871eb95fa88f6" "41b6698b5f9ab241ad6c30aea8c9f53d539e23ad4e3963abff4b57c0f8bf6730" "9bac44c2b4dfbb723906b8c491ec06801feb57aa60448d047dbfdbd1a8650897" "405fda54905200f202dd2e6ccbf94c1b7cc1312671894bc8eca7e6ec9e8a41a2" "51bea7765ddaee2aac2983fac8099ec7d62dff47b708aa3595ad29899e9e9e44" "3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "8c5ffc9848db0f9ad4e296fa3cba7f6ea3b0e4e00e8981a59592c99d21f99471" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+    ("442c946bc5c40902e11b0a56bd12edc4d00d7e1c982233545979968e02deb2bc" "d143750cb9fadb9ea9a3a27e0632418d2ad09788e115a61a64dd5404fedfe178" "d809ca3cef02087b48f3f94279b86feca896f544ae4a82b523fba823206b6040" "a507b9ca4a605d5256716da70961741b9ef9ec3246041a4eb776102e8df18418" "fa942713c74b5ad27893e72ed8dccf791c9d39e5e7336e52d76e7125bfa51d4c" "56cb99174fad69feba8edd6663c592e77d77332fb4c4bb5be058ef459a426463" "c3e567dedaa800e869d879c4df8478237d6ea31fd04464086fd674c864fe4d71" "f0a99f53cbf7b004ba0c1760aa14fd70f2eabafe4e62a2b3cf5cabae8203113b" "efa048d8a9f9a8340a2f6382f3b8b8f4549cba38aa226803ff5b6a9b3a2d5f4b" "3b819bba57a676edf6e4881bd38c777f96d1aa3b3b5bc21d8266fa5b0d0f1ebf" "16248150e4336572ff4aa21321015d37c3744a9eb243fbd1e934b594ff9cf394" "1c6693b96aab150f9739f19fc423770e0eb0b4cb8e2a95c8c6c48abcae719521" "572caef0c27b100a404db8d540fd5b31397f90ab660ef5539ff0863ff9bee26a" "e53cc4144192bb4e4ed10a3fa3e7442cae4c3d231df8822f6c02f1220a0d259a" "e80a0a5e1b304eb92c58d0398464cd30ccbc3622425b6ff01eea80e44ea5130e" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "ae8d0f1f36460f3705b583970188e4fbb145805b7accce0adb41031d99bd2580" "1affe85e8ae2667fb571fc8331e1e12840746dae5c46112d5abb0c3a973f5f5a" "7694bfb46ec19cfc47093783633d8cd4df208d620104910bf5c1c840528a8dd1" "de2c46ed1752b0d0423cde9b6401062b67a6a1300c068d5d7f67725adc6c3afb" "978ff9496928cc94639cb1084004bf64235c5c7fb0cfbcc38a3871eb95fa88f6" "41b6698b5f9ab241ad6c30aea8c9f53d539e23ad4e3963abff4b57c0f8bf6730" "9bac44c2b4dfbb723906b8c491ec06801feb57aa60448d047dbfdbd1a8650897" "405fda54905200f202dd2e6ccbf94c1b7cc1312671894bc8eca7e6ec9e8a41a2" "51bea7765ddaee2aac2983fac8099ec7d62dff47b708aa3595ad29899e9e9e44" "3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "8c5ffc9848db0f9ad4e296fa3cba7f6ea3b0e4e00e8981a59592c99d21f99471" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(deft-directory "/home/larry/Dropbox/deft/")
+ '(dired-listing-switches "-alX")
  '(ein:use-auto-complete t)
  '(ein:use-auto-complete-superpack t)
  '(fci-rule-color "#383838")
@@ -213,7 +225,26 @@
  '(ido-show-dot-for-dired t)
  '(ido-use-filename-at-point (quote guess))
  '(vc-annotate-background "#2B2B2B")
- '(vc-annotate-color-map (quote ((20 . "#BC8383") (40 . "#CC9393") (60 . "#DFAF8F") (80 . "#D0BF8F") (100 . "#E0CF9F") (120 . "#F0DFAF") (140 . "#5F7F5F") (160 . "#7F9F7F") (180 . "#8FB28F") (200 . "#9FC59F") (220 . "#AFD8AF") (240 . "#BFEBBF") (260 . "#93E0E3") (280 . "#6CA0A3") (300 . "#7CB8BB") (320 . "#8CD0D3") (340 . "#94BFF3") (360 . "#DC8CC3"))))
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#BC8383")
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3"))))
  '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
