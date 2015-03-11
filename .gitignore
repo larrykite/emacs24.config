@@ -16,3 +16,4 @@ eshell/
 .gitignore.*
 *.orig
 .\#*
+.DS_Store
