@@ -1,6 +1,26 @@
 ;; Keyboard
 ;; ============
 ;;
+(global-set-key (kbd "C-c a") 'auto-fill-mode)
+(global-set-key (kbd "C-<backspace>") (lambda ()
+                                        (interactive)
+                                        (kill-line 0)
+                                        (indent-according-to-mode)))
+(global-set-key (kbd "C-x C-r") 'recentf-ido-find-file)
+(global-set-key (kbd "C-c D") 'delete-file-and-buffer)
+(global-set-key (kbd "C-x O") (lambda ()
+                                (interactive)
+                                (other-window -1)))
+(global-set-key (kbd "RET") 'newline-and-indent)
+(global-set-key [(control x) (k)] 'kill-this-buffer)
+
+;; C-z should never iconify Emacs, only suspend it when in a terminal.
+;; I mean, who even iconifies programs any more?  Not me.
+(if (eq window-system 'x)
+    (global-set-key [(control z)] 'suspend-emacs))
+;; Make it easy to ask about a character.  Useful for obscure Unicode.
+(global-set-key "\M-?" 'describe-char)
+
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
 (global-set-key (kbd "C-x C") 'ibuffer)
 (global-set-key (kbd "C-x B") 'ibuffer)
@@ -16,13 +36,13 @@
 (global-set-key [s-tab]     'yic-next-buffer)
 (global-set-key [s-S-iso-lefttab]     'yic-prev-buffer)
 
-(global-set-key [home] 'beginning-of-line)
-(global-set-key [end] 'end-of-line)
-(global-set-key [C-home] 'beginning-of-buffer)
-(global-set-key [C-end] 'end-of-buffer)
+;; (global-set-key [home] 'beginning-of-line)
+;; (global-set-key [end] 'end-of-line)
+;; (global-set-key [C-home] 'beginning-of-buffer)
+;; (global-set-key [C-end] 'end-of-buffer)
 (global-set-key (kbd "C-c c") 'comment-region)   ;; make C-c C-c and C-c C-u work
 (global-set-key (kbd "C-c C-c") 'comment-region) ;; make C-c C-c and C-c C-u work
-(global-set-key (kbd "C-c m") 'remember) 
+(global-set-key (kbd "C-c m") 'remember)
 (global-set-key (kbd "C-c u") 'uncomment-region) ;; for comment/uncomment region in all modes
 (global-set-key (kbd "C-c C-u") 'uncomment-region) ;; for comment/uncomment region in all modes
 (global-set-key (kbd "M-<up>") 'move-line-up)

@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 25-09-2014 16:50:38 by Larry Kite, larry>
+;; Time-stamp: <Last changed 09-01-2015 11:13:16 by Larry Kite, larry>
 ;; Last changed:
 ;; Defined Functions
 ;;
@@ -49,11 +49,6 @@
       (set-buffer-modified-p nil))
     (message "Renamed to %s." new-name)))
 
-(setq
- time-stamp-active t          ; do enable time-stamps
- time-stamp-line-limit 10     ; check first 10 buffer lines for Time-stamp: <>
- time-stamp-format "Last changed %02d-%02m-%04y %02H:%02M:%02S by %L, %u") ; date format
-(add-hook 'write-file-hooks 'time-stamp) ; update when saving
 
 ;; Move current line up or down with M-up or M-down
 (defun move-line (n)
@@ -207,12 +202,12 @@ print a message in the minibuffer with the result."
     "save a macro. Take a name as argument
      and save the last defined macro under
      this name at the end of your .emacs"
-    (interactive "SName of the macro :")  ; ask for the name of the macro    
-    (kmacro-name-last-macro name)         ; use this name for the macro    
-    (find-file user-init-file)                   ; open ~/.emacs or other user init file 
+    (interactive "SName of the macro :")  ; ask for the name of the macro
+    (kmacro-name-last-macro name)         ; use this name for the macro
+    (find-file user-init-file)                   ; open ~/.emacs or other user init file
     (goto-char (point-max))               ; go to the end of the .emacs
     (newline)                             ; insert a newline
-    (insert-kbd-macro name)               ; copy the macro 
+    (insert-kbd-macro name)               ; copy the macro
     (newline)                             ; insert a newline
     (switch-to-buffer nil))               ; return to the initial buffer
 
@@ -434,6 +429,7 @@ Repeated invocations toggle between the two most recently open buffers."
     ))
 
 (global-set-key (kbd "C-c C-x C-b") 'create-scratch-buffer)
+(global-set-key (kbd "C-c C-b") 'create-scratch-buffer)
 
 
 (defun toggle-window-split ()

@@ -18,3 +18,10 @@ eshell/
 session\.*
 .python-environments/
 \#*
+./ensime
+.ensime_cache/
+ensime/
+font-messing.el
+image-dired/
+target
+.ensime
