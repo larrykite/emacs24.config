@@ -25,3 +25,7 @@ font-messing.el
 image-dired/
 target
 .ensime
+*\~
+*bak*
+savefile/
+projectile-bookmarks.eld
