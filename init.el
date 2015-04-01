@@ -4,7 +4,11 @@
 
 ;; Set up 'custom' system
 (setq custom-file (expand-file-name "emacs-customizations.el" lmk-emacs-config-dir))
+(setq functions-file (expand-file-name "functions.el" lmk-emacs-config-dir))
+(setq keybinding-file (expand-file-name "keybindings.el" lmk-emacs-config-dir))
 (load custom-file)
+(load functions-file)
+(load keybinding-file)
 
 (setq user-emacs-directory lmk-emacs-config-dir)
 
@@ -20,9 +24,13 @@
 		      auto-complete
 		      epc
 		      jedi
+		      zenburn-theme
+		      solarized-theme
 		      )
   "A list of packages to ensure are installed at launch.")
 
+
+(fset 'yes-or-no-p 'y-or-n-p)
 
 (defun uninstalled-packages (packages)
   (delq nil
@@ -38,13 +46,18 @@
       (dolist (p need-to-install)
 	(package-install p)))))
 
+;; use zenburn as the default theme
+;; (load-theme 'zenburn t)
+(load-theme 'solarized-light t)
+
+
 ;; Global Jedi config vars
 
 (defvar jedi-config:use-system-python nil
   "Will use system python and active environment for Jedi server.
 May be necessary for some GUI environments (e.g., Mac OS X)")
 
-(defvar jedi-config:with-virtualenv nil
+(defvar jedi-config:with-virtualenv "mypythonenv"
   "Set to non-nil to point to a particular virtualenv.")
 
 (defvar jedi-config:vcs-root-sentinel ".git")
