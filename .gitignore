@@ -9,14 +9,12 @@ ido.last
 recentf
 request/
 url/
-
 tramp
 eshell/
 .mc-lists.el
 .gitignore.*
 *.orig
 session\.*
-.python-environments/
 \#*
 ./ensime
 .ensime_cache/
