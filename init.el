@@ -21,14 +21,17 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (defvar local-packages '(projectile
-		      auto-complete
-		      epc
-		      jedi
-		      zenburn-theme
-		      solarized-theme
-		      )
+			 auto-complete
+			 starter-kit
+			 starter-kit-bindings
+			 epc
+			 jedi
+			 zenburn-theme
+			 solarized-theme
+			 undo-tree
+			 ido-ubiquitous
+			 )
   "A list of packages to ensure are installed at launch.")
-
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -46,9 +49,23 @@
       (dolist (p need-to-install)
 	(package-install p)))))
 
-;; use zenburn as the default theme
-;; (load-theme 'zenburn t)
 (load-theme 'solarized-light t)
+
+(setq undo-tree-mode-lighter "")
+(global-undo-tree-mode)
+(show-paren-mode 1)
+
+;; ido-mode is like magic pixie dust!
+(ido-mode t)
+(ido-ubiquitous-mode)
+(setq ido-enable-prefix nil
+      ido-enable-flex-matching t
+      ido-auto-merge-work-directories-length nil
+      ido-create-new-buffer 'always
+      ido-use-filename-at-point 'guess
+      ido-use-virtual-buffers t
+      ido-handle-duplicate-virtual-buffers 2
+      ido-max-prospects 10)
 
 
 ;; Global Jedi config vars
