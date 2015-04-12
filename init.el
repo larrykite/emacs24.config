@@ -30,6 +30,8 @@
 			 solarized-theme
 			 undo-tree
 			 ido-ubiquitous
+                         leuven-theme
+                         naquadah-theme
 			 )
   "A list of packages to ensure are installed at launch.")
 
@@ -49,7 +51,7 @@
       (dolist (p need-to-install)
 	(package-install p)))))
 
-(load-theme 'solarized-light t)
+(load-theme 'naquadah t)
 
 (setq undo-tree-mode-lighter "")
 (global-undo-tree-mode)
@@ -234,18 +236,22 @@ May be necessary for some GUI environments (e.g., Mac OS X)")
     (setq jedi:complete-on-dot t)
     ;; Use custom keybinds
     (add-hook 'python-mode-hook 'jedi-config:setup-keys)
-
     ))
-;; (when (not package-archive-contents)
-;;   (package-refresh-contents))
+
+(defalias 'qrr 'query-replace-regexp)
+(defadvice show-paren-function
+      (after show-matching-paren-offscreen activate)
+      "If the matching paren is offscreen, show the matching line in the
+        echo area. Has no effect if the character before point is not of
+        the syntax class ')'."
+      (interactive)
+      (let* ((cb (char-before (point)))
+             (matching-text (and cb
+                                 (char-equal (char-syntax cb) ?\) )
+                                 (blink-matching-open))))
+        (when matching-text (message matching-text))))
 
 
-
-;; (dolist (p my-packages)
-;;   (when (not (package-installed-p p))
-;;     (package-install p)))
-
-;; (defalias 'qrr 'query-replace-regexp)
-
-;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
-;; (add-hook 'sh-mode-hook 'turn-off-auto-fill)
+;; ugly hack to remove "." from load-path. Can't figure out where it's
+;; being added.
+ (setq load-path (remove "." load-path))

@@ -8,7 +8,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (starter-kit-bindings starter-kit ido-ubiquitous undo-tree solarized-theme zenburn-theme jedi epc auto-complete projectile)))
+    (naquadah-theme leuven-theme starter-kit-bindings starter-kit ido-ubiquitous undo-tree solarized-theme zenburn-theme jedi epc auto-complete projectile)))
  '(size-indication-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
