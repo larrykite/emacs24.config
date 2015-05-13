@@ -28,6 +28,7 @@
 			 jedi
 			 zenburn-theme
 			 solarized-theme
+                         deft
 			 undo-tree
 			 ido-ubiquitous
                          leuven-theme
