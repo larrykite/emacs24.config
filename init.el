@@ -254,4 +254,5 @@ May be necessary for some GUI environments (e.g., Mac OS X)")
 
 ;; ugly hack to remove "." from load-path. Can't figure out where it's
 ;; being added.
- (setq load-path (remove "." load-path))
+(setq load-path (remove "." load-path))
+(setq magit-last-seen-setup-instructions "1.4.0")
