@@ -256,3 +256,6 @@ May be necessary for some GUI environments (e.g., Mac OS X)")
 ;; ugly hack to remove "." from load-path. Can't figure out where it's
 ;; being added.
  (setq load-path (remove "." load-path))
+(eval-after-load "python"
+  '(define-key python-mode-map "\C-cx" 'jedi-direx:pop-to-buffer))
+(add-hook 'jedi-mode-hook 'jedi-direx:setup)
