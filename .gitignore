@@ -28,3 +28,4 @@ target
 savefile/
 projectile-bookmarks.eld
 .\#*
+.python-environments/
