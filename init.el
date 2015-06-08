@@ -25,6 +25,7 @@
 			 starter-kit
 			 starter-kit-bindings
 			 epc
+                         ess
 			 jedi
 			 zenburn-theme
 			 solarized-theme
@@ -37,7 +38,7 @@
   "A list of packages to ensure are installed at launch.")
 
 (fset 'yes-or-no-p 'y-or-n-p)
-
+(require 'ess-site)
 (defun uninstalled-packages (packages)
   (delq nil
 	(mapcar (lambda (p) (if (package-installed-p p nil) nil p)) packages)))
