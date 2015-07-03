@@ -15,7 +15,9 @@ eshell/
 .gitignore.*
 *.orig
 .\#*
+\#*
 .DS_Store
 session\.*
 .python-environments/
 
+projectile-bookmarks.eld
