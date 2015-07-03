@@ -1,3 +1,4 @@
+
 ;; Time-stamp: <Last changed 30-05-2014 08:45:52 by Larry Kite, larrykite>
 
 (defconst *is-a-mac* (eq system-type 'darwin))
@@ -6,9 +7,12 @@
 
 ;; Configure el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
+(add-to-list 'load-path "~/dev/makey")
+(add-to-list 'load-path "~/dev/discover.el")
+(add-to-list 'load-path "/home/larry/.emacs.d/elpa/yasnippet-20140314.255/snippets")
+;;(add-to-list 'load-path "~/dev/smart-scan")
 (setq el-get-user-package-directory "~/.emacs.d/el-get-init-files")
-
+;; (set-default-font "Source Code Pro")
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
@@ -33,6 +37,7 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
+(setenv "PYTHONPATH" "/usr/bin/python")
 (when (not package-archive-contents)
   (package-refresh-contents))
 
@@ -44,22 +49,29 @@
                       buffer-move
                       deft
                       dired+
+                      discover
                       dropdown-list
+                      elpy
                       expand-region
                       helm
+                      git-gutter
+                      git-gutter-fringe
                       idle-highlight-mode
                       ido-ubiquitous
                       ido-vertical-mode
+                      jinja2-mode
                       key-chord
                       magit
                       multiple-cursors
                       naquadah-theme
                       rainbow-delimiters
+                      smartscan
                       smex
                       solarized-theme
                       switch-window
                       yasnippet
                       zenburn-theme
+                      web-mode
                       ess)
 
   "A list of packages to ensure are installed at launch.")
@@ -68,6 +80,7 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
+(elpy-enable)
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
@@ -94,30 +107,32 @@
 
 (load-theme 'zenburn t)
 ;;(load-theme 'base16-mocha t)
-
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-(require 'expand-region)
-(global-set-key (kbd "C-=") 'er/expand-region)
-
+;;(load-theme 'base16-chalk t)
+(global-git-gutter-mode t)
+(require 'git-gutter-fringe)
+;; commented out multiple-cursors because same functionality exists as
+;; part of elpy
+;;(require 'multiple-cursors)
+;;(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+;;(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+;;(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+;;(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+;;(require 'expand-region)
+;;(global-set-key (kbd "C-=") 'er/expand-region)
+(setq undo-tree-mode-lighter "")
 (require 'undo-tree)
 (global-undo-tree-mode)
 (ido-mode 1)
-(require 'doremi)
+;; commented out doremi because I have no idea wtf it does.
+;;(require 'doremi)
 (require 'switch-window)
 (require 'buffer-move)
 (require 'dired-x)
-
 (require 'whitespace)
-(setq whitespace-line-column 96)
+(setq whitespace-line-column 80)
 (setq whitespace-style '(face lines-tail))
 ;;(add-hook 'prog-mode-hook 'whitespace-mode)
 (global-whitespace-mode +1)
-
-(winner-mode 1)
 
 (require 'key-chord)
 (key-chord-mode 1)
@@ -172,20 +187,37 @@
 (set-frame-height (selected-frame) 52)
 (set-frame-width (selected-frame) 130)
 
+
 (fset 'resize-main-frame
    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([67108917 67108915 3 104 67108913 67108915 67108912 3 119] 0 "%d")) arg)))
 (global-set-key (kbd "C-c z") 'resize-main-frame)
+
+
+(require 'discover)
+(global-discover-mode 1)
+(smartscan-mode 1)
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+;; Show the current function name in the header line
+(which-function-mode)
+(setq-default header-line-format
+              '((which-func-mode ("" which-func-format " "))))
+(setq mode-line-misc-info
+            ;; We remove Which Function Mode from the mode line, because it's mostly
+            ;; invisible here anyway.
+            (assq-delete-all 'which-func-mode mode-line-misc-info))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+
  '(custom-safe-themes
    (quote
-    ("946020d54b5a64107c3b92e5b68c4d27f647a629e6949404a410ed59918e17a1" "fc6e906a0e6ead5747ab2e7c5838166f7350b958d82e410257aeeb2820e8a07a" "ca3bf8a7c831776c77d09ded89f2f0993dbdd9cb0765d8db061d1ebff806f41c" "c377a5f3548df908d58364ec7a0ee401ee7235e5e475c86952dc8ed7c4345d8e" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "8c5ffc9848db0f9ad4e296fa3cba7f6ea3b0e4e00e8981a59592c99d21f99471" "7bc53c2f13ad0de4f1df240fde8fe3d5f11989944c69f9e02f2bd3da9ebbdcd9" default)))
- '(deft-extension "org")
- '(deft-text-mode (quote org-mode))
+    ("e53cc4144192bb4e4ed10a3fa3e7442cae4c3d231df8822f6c02f1220a0d259a" "e80a0a5e1b304eb92c58d0398464cd30ccbc3622425b6ff01eea80e44ea5130e" "e16a771a13a202ee6e276d06098bc77f008b73bbac4d526f160faa2d76c1dd0e" "ae8d0f1f36460f3705b583970188e4fbb145805b7accce0adb41031d99bd2580" "1affe85e8ae2667fb571fc8331e1e12840746dae5c46112d5abb0c3a973f5f5a" "7694bfb46ec19cfc47093783633d8cd4df208d620104910bf5c1c840528a8dd1" "de2c46ed1752b0d0423cde9b6401062b67a6a1300c068d5d7f67725adc6c3afb" "978ff9496928cc94639cb1084004bf64235c5c7fb0cfbcc38a3871eb95fa88f6" "41b6698b5f9ab241ad6c30aea8c9f53d539e23ad4e3963abff4b57c0f8bf6730" "9bac44c2b4dfbb723906b8c491ec06801feb57aa60448d047dbfdbd1a8650897" "405fda54905200f202dd2e6ccbf94c1b7cc1312671894bc8eca7e6ec9e8a41a2" "51bea7765ddaee2aac2983fac8099ec7d62dff47b708aa3595ad29899e9e9e44" "3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "8c5ffc9848db0f9ad4e296fa3cba7f6ea3b0e4e00e8981a59592c99d21f99471" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(deft-directory "/home/larry/Dropbox/deft/")
  '(ein:use-auto-complete t)
  '(ein:use-auto-complete-superpack t)
  '(fci-rule-color "#383838")
@@ -224,28 +256,11 @@
  ;; If there is more than one, they won't work right.
  )
 
-;; (custom-set-variables
-;;  ;; custom-set-variables was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;   '(custom-safe-themes (quote ("fc6e906a0e6ead5747ab2e7c5838166f7350b958d82e410257aeeb2820e8a07a" "ca3bf8a7c831776c77d09ded89f2f0993dbdd9cb0765d8db061d1ebff806f41c" "c377a5f3548df908d58364ec7a0ee401ee7235e5e475c86952dc8ed7c4345d8e" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "8c5ffc9848db0f9ad4e296fa3cba7f6ea3b0e4e00e8981a59592c99d21f99471" "7bc53c2f13ad0de4f1df240fde8fe3d5f11989944c69f9e02f2bd3da9ebbdcd9" default)))
-;;  '(ein:use-auto-complete t)
-;;  '(ein:use-auto-complete-superpack t)
-;;  '(fci-rule-color "#383838")
-;;  '(ido-create-new-buffer (quote never))
-;;  '(ido-enable-flex-matching t)
-;;  '(ido-everywhere t)
-;;  '(ido-file-extensions-order (quote (".py" ".el" ".sh")))
-;;  '(ido-show-dot-for-dired t)
-;;  '(ido-use-filename-at-point (quote guess))
-;;  '(menu-bar-mode nil)
-;;  '(winner-mode t))
-;;  '(vc-annotate-very-old-color "#DC8CC3")
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  ))
-;; (put 'upcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
+(fset 'resize-main-frame
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([67108917 67108915 3 104 67108913 67108915 67108912 3 119] 0 "%d")) arg)))
+(global-set-key (kbd "C-c z") 'resize-main-frame)
+
+(fset 'testmacro
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("" 0 "%d")) arg)))

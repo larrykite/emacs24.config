@@ -9,7 +9,6 @@ ido.last
 recentf
 request/
 url/
-
 tramp
 eshell/
 .mc-lists.el
@@ -17,3 +16,6 @@ eshell/
 *.orig
 .\#*
 .DS_Store
+session\.*
+.python-environments/
+

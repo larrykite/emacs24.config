@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 26-09-2013 12:46:15 by Larry Kite, larry>
+;; Time-stamp: <Last changed 07-04-2014 17:49:48 by Larry Kite, larry>
 ;; Last changed:
 ;; Defined Functions
 ;;
@@ -207,15 +207,14 @@ print a message in the minibuffer with the result."
     "save a macro. Take a name as argument
      and save the last defined macro under
      this name at the end of your .emacs"
-     (interactive "SName of the macro :")  ; ask for the name of the macro
-     (kmacro-name-last-macro name)         ; use this name for the macro
-     (find-file user-init-file)            ; open ~/.emacs or other user init file
-     (goto-char (point-max))               ; go to the end of the .emacs
-     (newline)                             ; insert a newline
-     (insert-kbd-macro name)               ; copy the macro
-     (newline)                             ; insert a newline
-     (switch-to-buffer nil))               ; return to the initial buffer
-
+    (interactive "SName of the macro :")  ; ask for the name of the macro    
+    (kmacro-name-last-macro name)         ; use this name for the macro    
+    (find-file user-init-file)                   ; open ~/.emacs or other user init file 
+    (goto-char (point-max))               ; go to the end of the .emacs
+    (newline)                             ; insert a newline
+    (insert-kbd-macro name)               ; copy the macro 
+    (newline)                             ; insert a newline
+    (switch-to-buffer nil))               ; return to the initial buffer
 
 (defun kill-start-of-line ()
   "Kill characters from point to beginning of line"
@@ -356,6 +355,8 @@ the current buffer."
                          (ansi-term (getenv "SHELL")))
                       "*ansi-term*"))
 
+(global-set-key (kbd "C-c t") 'visit-term-buffer)
+
 (defun visit-ielm ()
   "Switch to default `ielm' buffer.
 Start `ielm' if it's not already running."
@@ -416,3 +417,82 @@ Repeated invocations toggle between the two most recently open buffers."
     (find-file-other-window (expand-file-name shell-init-file (getenv "HOME")))))
 
 (global-set-key (kbd "C-c S") 'find-shell-init-file)
+
+(defun create-scratch-buffer nil
+  "create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
+  (interactive)
+  (let ((n 0)
+        bufname)
+    (while (progn
+             (setq bufname (concat "*scratch"
+                                   (if (= n 0) "" (int-to-string n))
+                                   "*"))
+             (setq n (1+ n))
+             (get-buffer bufname)))
+    (switch-to-buffer (get-buffer-create bufname))
+    (emacs-lisp-mode)
+    ))
+
+(global-set-key (kbd "C-c C-x C-b") 'create-scratch-buffer)
+
+
+(defun toggle-window-split ()
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+             (next-win-buffer (window-buffer (next-window)))
+             (this-win-edges (window-edges (selected-window)))
+             (next-win-edges (window-edges (next-window)))
+             (this-win-2nd (not (and (<= (car this-win-edges)
+                                         (car next-win-edges))
+                                     (<= (cadr this-win-edges)
+                                         (cadr next-win-edges)))))
+             (splitter
+              (if (= (car this-win-edges)
+                     (car (window-edges (next-window))))
+                  'split-window-horizontally
+                'split-window-vertically)))
+        (delete-other-windows)
+        (let ((first-win (selected-window)))
+          (funcall splitter)
+          (if this-win-2nd (other-window 1))
+          (set-window-buffer (selected-window) this-win-buffer)
+          (set-window-buffer (next-window) next-win-buffer)
+          (select-window first-win)
+          (if this-win-2nd (other-window 1))))))
+
+(global-set-key (kbd "C-c C-w") 'toggle-window-split)
+
+(defun split-window-right-and-move-there-dammit ()
+  (interactive)
+  (split-window-right)
+  (windmove-right))
+
+(global-set-key (kbd "C-c C-r") 'split-window-right-and-move-there-dammit)
+
+(defun rotate-windows ()
+  "Rotate your windows"
+  (interactive)
+  (cond ((not (> (count-windows)1))
+         (message "You can't rotate a single window!"))
+        (t
+         (setq i 1)
+         (setq numWindows (count-windows))
+         (while  (< i numWindows)
+           (let* (
+                  (w1 (elt (window-list) i))
+                  (w2 (elt (window-list) (+ (% i numWindows) 1)))
+
+                  (b1 (window-buffer w1))
+                  (b2 (window-buffer w2))
+
+                  (s1 (window-start w1))
+                  (s2 (window-start w2))
+                  )
+             (set-window-buffer w1  b2)
+             (set-window-buffer w2 b1)
+             (set-window-start w1 s2)
+             (set-window-start w2 s1)
+             (setq i (1+ i)))))))
+
+(global-set-key (kbd "C-c C-x C-c") 'rotate-windows)
