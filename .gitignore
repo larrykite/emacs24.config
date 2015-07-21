@@ -21,3 +21,4 @@ session\.*
 .python-environments/
 
 projectile-bookmarks.eld
+*.bak
