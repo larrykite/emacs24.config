@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 03-07-2015 17:05:19 by Larry Kite, larrykite>
+;; Time-stamp: <Last changed 21-07-2015 16:57:13 by Larry Kite, larrykite>
 
 (defconst *is-a-mac* (eq system-type 'darwin))
 (defconst *is-linux* (eq system-type 'gnu/linux))
