@@ -34,6 +34,7 @@
 			 ido-ubiquitous
                          leuven-theme
                          naquadah-theme
+			 ensime
 			 )
   "A list of packages to ensure are installed at launch.")
 
