@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 21-07-2015 16:57:13 by Larry Kite, larrykite>
+;; Time-stamp: <Last changed 22-07-2015 14:52:08 by Larry Kite, larrykite>
 
 (defconst *is-a-mac* (eq system-type 'darwin))
 (defconst *is-linux* (eq system-type 'gnu/linux))
@@ -208,7 +208,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ess web-mode zenburn-theme switch-window solarized-theme smartscan rainbow-delimiters naquadah-theme multiple-cursors key-chord jinja2-mode ido-vertical-mode git-gutter-fringe git-gutter helm expand-region elpy dropdown-list discover dired+ deft buffer-move browse-kill-ring ace-jump-mode starter-kit-bindings))))
+    (ess zenburn-theme switch-window solarized-theme smartscan rainbow-delimiters naquadah-theme multiple-cursors key-chord jinja2-mode ido-vertical-mode git-gutter-fringe git-gutter expand-region elpy dropdown-list discover dired+ deft buffer-move browse-kill-ring ace-jump-mode starter-kit-bindings))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
