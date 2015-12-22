@@ -13,13 +13,13 @@
 (require 'package)
 ;; Configure elpa
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+             '("melpa" . "http://melpa.org/packages/"))
+;; (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
 (package-initialize)
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(starter-kit
-                      starter-kit-bindings
+(defvar my-packages '(better-defaults
                       auto-complete
                       ein
                       jedi
@@ -31,6 +31,7 @@
                       discover
                       dropdown-list
                       ess
+		      idle-highlight-mode
                       ido-ubiquitous
                       key-chord
                       magit
