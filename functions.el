@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 09-01-2015 11:13:16 by Larry Kite, larry>
+;; Time-stamp: <Last changed 22-12-2015 10:55:34 by Larry Kite, lkite>
 ;; Last changed:
 ;; Defined Functions
 ;;
@@ -55,8 +55,8 @@
   "Move the current line up or down by N lines."
   (interactive "p")
   (let ((col (current-column))
-	start
-	end)
+    start
+    end)
     (beginning-of-line)
     (setq start (point))
     (end-of-line)
@@ -140,7 +140,7 @@
     (while (and ptr (null go))
       (setq bf (car ptr)  bn (buffer-name bf))
       (if (null (yic-ignore bn))        ;skip over
-	  (setq go bf)
+      (setq go bf)
         (setq ptr (cdr ptr))
         )
       )
@@ -168,8 +168,8 @@ print a message in the minibuffer with the result."
     (let ((count 0))
       (goto-char (point-min))
       (while (< (point) (point-max))
-	(forward-word 1)
-	(setq count (1+ count)))
+    (forward-word 1)
+    (setq count (1+ count)))
       (message "buffer contains %d words." count))))
 
 (defun win-swap ()
@@ -182,7 +182,7 @@ print a message in the minibuffer with the result."
 (defun fullscreen ()
   (interactive)
   (set-frame-parameter nil 'fullscreen
-		       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
+               (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 
 (defun unix-file ()
   "Change the current buffer to Latin 1 with Unix line-ends."

@@ -1,4 +1,4 @@
-;; Time-stamp: <Last changed 04-03-2015 15:57:59 by Larry Kite, larry>
+;; Time-stamp: <Last changed 22-12-2015 10:43:47 by Larry Kite, lkite>
 
 (setenv "PYTHONPATH" "/usr/bin/python")
 ;; (set-default-font "Source Code Pro")
@@ -31,7 +31,7 @@
                       discover
                       dropdown-list
                       ess
-		      idle-highlight-mode
+                      idle-highlight-mode
                       ido-ubiquitous
                       key-chord
                       magit
@@ -114,11 +114,11 @@
 ;; (global-set-key (kbd "C-#") 'ecb-goto-window-methods)
 ;; (global-set-key (kbd "C-$") 'ecb-goto-window-compilation)
 ;; (add-hook 'ecb-deactivate-hook
-;; 	  (lambda () (modify-all-frames-parameters '((width . 80)))))
+;;    (lambda () (modify-all-frames-parameters '((width . 80)))))
 ;; ;; resize the ECB window to be default (order matters here)
 ;; (add-hook 'ecb-activate-hook (lambda () (ecb-redraw-layout)))
 ;; (add-hook 'ecb-activate-hook
-;; 	  (lambda () (modify-all-frames-parameters '((width . 120)))))
+;;    (lambda () (modify-all-frames-parameters '((width . 120)))))
 
 ;; (require 'ecb-autoloads)
 

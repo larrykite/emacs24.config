@@ -1,6 +1,7 @@
 ;; Keyboard
 ;; ============
 ;;
+(global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "C-c a") 'auto-fill-mode)
 (global-set-key (kbd "C-<backspace>") (lambda ()
                                         (interactive)
