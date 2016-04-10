@@ -24,6 +24,7 @@
 			 auto-complete
 			 starter-kit
 			 starter-kit-bindings
+                         avy
 			 epc
                          ess
 			 jedi
@@ -39,7 +40,7 @@
   "A list of packages to ensure are installed at launch.")
 
 (fset 'yes-or-no-p 'y-or-n-p)
-(require 'ess-site)
+
 (defun uninstalled-packages (packages)
   (delq nil
 	(mapcar (lambda (p) (if (package-installed-p p nil) nil p)) packages)))
@@ -55,7 +56,9 @@
 	(package-install p)))))
 
 (load-theme 'naquadah t)
-
+(require 'ess-site)
+(require 'ensime)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 (setq undo-tree-mode-lighter "")
 (global-undo-tree-mode)
 (show-paren-mode 1)
@@ -75,9 +78,9 @@
 
 ;; Global Jedi config vars
 
-(defvar jedi-config:use-system-python nil
+(defvar jedi-config:use-system-python nil)
   "Will use system python and active environment for Jedi server.
-May be necessary for some GUI environments (e.g., Mac OS X)")
+May be necessary for some GUI environments (e.g., Mac OS X)"
 
 (defvar jedi-config:with-virtualenv "mypythonenv"
   "Set to non-nil to point to a particular virtualenv.")
@@ -118,7 +121,7 @@ May be necessary for some GUI environments (e.g., Mac OS X)")
     (ac-config-default)
 
     ;; Uncomment next line if you like the menu right away
-    ;; (setq ac-show-menu-immediately-on-auto-complete t)
+    (setq ac-show-menu-immediately-on-auto-complete t)
 
     ;; Can also express in terms of ac-delay var, e.g.:
     ;;   (setq ac-auto-show-menu (* ac-delay 2))
@@ -263,3 +266,6 @@ May be necessary for some GUI environments (e.g., Mac OS X)")
   '(define-key python-mode-map "\C-cx" 'jedi-direx:pop-to-buffer))
 (add-hook 'jedi-mode-hook 'jedi-direx:setup)
 (setq magit-last-seen-setup-instructions "1.4.0")
+(global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
+(global-set-key (kbd "s-.") 'avy-goto-word-or-subword-1)
+(global-set-key (kbd "s-w") 'ace-window)
