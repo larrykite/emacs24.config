@@ -17,9 +17,13 @@
 
 (require 'cl)
 (require 'package)
-(package-initialize)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+             '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+
+(package-initialize)
+
 (defvar local-packages '(projectile
 			 auto-complete
 			 starter-kit
@@ -31,11 +35,19 @@
 			 zenburn-theme
 			 solarized-theme
                          deft
+                         elpy
 			 undo-tree
 			 ido-ubiquitous
                          leuven-theme
                          naquadah-theme
 			 ensime
+                         sx
+                         paradox
+                         which-key
+                         use-package
+                         smartscan
+                         rainbow-delimiters
+                         buffer-move
 			 )
   "A list of packages to ensure are installed at launch.")
 
@@ -88,7 +100,7 @@ May be necessary for some GUI environments (e.g., Mac OS X)"
 (defvar jedi-config:vcs-root-sentinel ".git")
 
 (defvar jedi-config:python-module-sentinel "__init__.py")
-
+(setq paradox-github-token "33d0493fada13cfff961622d2395ff1f2349ab89")
 ;; Helper functions
 
 ;; Small helper to scrape text from shell output
