@@ -23,32 +23,41 @@
              '("elpy" . "http://jorgenschaefer.github.io/packages/"))
 
 (package-initialize)
-
-(defvar local-packages '(projectile
-			 auto-complete
-			 starter-kit
-			 starter-kit-bindings
-                         avy
-			 epc
-                         ess
-			 jedi
-			 zenburn-theme
-			 solarized-theme
-                         deft
-                         elpy
-			 undo-tree
-			 ido-ubiquitous
-                         leuven-theme
-                         naquadah-theme
-			 ensime
-                         sx
-                         paradox
-                         which-key
-                         use-package
-                         smartscan
-                         rainbow-delimiters
-                         buffer-move
-			 )
+(defvar local-packages '(
+                      auto-complete
+		      avy
+		      better-defaults
+                      bind-key
+                      buffer-move
+                      dash
+                      deft
+                      dired+
+                      discover
+                      dropdown-list
+                      ein
+                      elpy
+                      ess
+                      idle-highlight-mode
+                      ido-ubiquitous
+                      jedi
+                      key-chord
+		      leuven-theme
+                      magit
+                      multiple-cursors
+		      naquadah-theme
+                      paradox
+                      projectile
+                      rainbow-delimiters
+                      smartscan
+                      smex
+                      solarized-theme
+                      switch-window
+                      sx
+                      undo-tree
+                      use-package
+                      which-key
+                      zenburn-theme
+		      )
   "A list of packages to ensure are installed at launch.")
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -69,8 +78,8 @@
 
 (load-theme 'naquadah t)
 (require 'ess-site)
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+;; (require 'ensime)
+;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 (setq undo-tree-mode-lighter "")
 (global-undo-tree-mode)
 (show-paren-mode 1)
