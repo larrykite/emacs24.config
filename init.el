@@ -24,47 +24,47 @@
 
 (package-initialize)
 (defvar local-packages '(
-                      auto-complete
-		      avy
-		      better-defaults
-                      bind-key
-                      buffer-move
-                      dash
-                      deft
-                      dired+
-                      discover
-                      dropdown-list
-                      ein
-                      elpy
-                      ess
-                      idle-highlight-mode
-                      ido-ubiquitous
-                      jedi
-                      key-chord
-		      leuven-theme
-                      magit
-                      multiple-cursors
-		      naquadah-theme
-                      paradox
-                      projectile
-                      rainbow-delimiters
-                      smartscan
-                      smex
-                      solarized-theme
-                      switch-window
-                      sx
-                      undo-tree
-                      use-package
-                      which-key
-                      zenburn-theme
-		      )
+                         auto-complete
+                         avy
+                         better-defaults
+                         bind-key
+                         buffer-move
+                         dash
+                         deft
+                         dired+
+                         discover
+                         dropdown-list
+                         ein
+                         elpy
+                         ess
+                         idle-highlight-mode
+                         ido-ubiquitous
+                         jedi
+                         key-chord
+                         leuven-theme
+                         magit
+                         multiple-cursors
+                         naquadah-theme
+                         paradox
+                         projectile
+                         rainbow-delimiters
+                         smartscan
+                         smex
+                         solarized-theme
+                         switch-window
+                         sx
+                         undo-tree
+                         use-package
+                         which-key
+                         zenburn-theme
+                         )
   "A list of packages to ensure are installed at launch.")
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (defun uninstalled-packages (packages)
   (delq nil
-	(mapcar (lambda (p) (if (package-installed-p p nil) nil p)) packages)))
+        (mapcar (lambda (p) (if (package-installed-p p nil) nil p)) packages)))
 
 ;; This delightful bit adapted from:
 ;; http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/
@@ -74,7 +74,7 @@
     (progn
       (package-refresh-contents)
       (dolist (p need-to-install)
-	(package-install p)))))
+        (package-install p)))))
 
 (load-theme 'naquadah t)
 (require 'ess-site)
@@ -85,7 +85,7 @@
 (show-paren-mode 1)
 
 ;; ido-mode is like magic pixie dust!
-(ido-mode t)
+(ido-mode 1)
 (ido-ubiquitous-mode)
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
@@ -96,11 +96,35 @@
       ido-handle-duplicate-virtual-buffers 2
       ido-max-prospects 10)
 
+(require 'recentf)
+(setq recentf-max-saved-items 200
+      recentf-max-menu-items 15)
+(recentf-mode +1)
+
+(global-hl-line-mode +1)
+
+(setq scroll-preserve-screen-position t)
+
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(add-hook 'sh-mode-hook 'turn-off-auto-fill)
+
+(if (display-graphic-p)
+    (set-frame-to-my-size))
+;; Show the current function name in the header line
+(which-function-mode)
+(setq-default header-line-format
+              '((which-func-mode ("" which-func-format " "))))
+(setq mode-line-misc-info
+      ;; We remove Which Function Mode from the mode line, because it's mostly
+      ;; invisible here anyway.
+      (assq-delete-all 'which-func-mode mode-line-misc-info))
+
+(setq column-number-mode t)
 
 ;; Global Jedi config vars
 
 (defvar jedi-config:use-system-python nil)
-  "Will use system python and active environment for Jedi server.
+"Will use system python and active environment for Jedi server.
 May be necessary for some GUI environments (e.g., Mac OS X)"
 
 (defvar jedi-config:with-virtualenv "mypythonenv"
@@ -158,10 +182,10 @@ May be necessary for some GUI environments (e.g., Mac OS X)"
       "Just uses the vc-find-root function to figure out the project root.
        Won't always work for some directory layouts."
       (let* ((buf-dir (expand-file-name (file-name-directory (buffer-file-name buf))))
-	     (project-root (vc-find-root buf-dir repo-file)))
-	(if project-root
-	    (expand-file-name project-root)
-	  nil)))
+             (project-root (vc-find-root buf-dir repo-file)))
+        (if project-root
+            (expand-file-name project-root)
+          nil)))
 
     ;; Method 2: slightly more robust
     (defun get-project-root-with-file (buf repo-file &optional init-file)
@@ -267,16 +291,16 @@ May be necessary for some GUI environments (e.g., Mac OS X)"
 
 (defalias 'qrr 'query-replace-regexp)
 (defadvice show-paren-function
-      (after show-matching-paren-offscreen activate)
-      "If the matching paren is offscreen, show the matching line in the
+    (after show-matching-paren-offscreen activate)
+  "If the matching paren is offscreen, show the matching line in the
         echo area. Has no effect if the character before point is not of
         the syntax class ')'."
-      (interactive)
-      (let* ((cb (char-before (point)))
-             (matching-text (and cb
-                                 (char-equal (char-syntax cb) ?\) )
-                                 (blink-matching-open))))
-        (when matching-text (message matching-text))))
+  (interactive)
+  (let* ((cb (char-before (point)))
+         (matching-text (and cb
+                             (char-equal (char-syntax cb) ?\) )
+                             (blink-matching-open))))
+    (when matching-text (message matching-text))))
 
 
 ;; ugly hack to remove "." from load-path. Can't figure out where it's

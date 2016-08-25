@@ -12,9 +12,11 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (soft-charcoal-theme sx ace-window switch-window hc-zenburn-theme minimap markdown-mode markdown-mode+ markdown-toc avy json-mode ess jedi-direx deft ess-R-data-view ess-R-object-popup naquadah-theme leuven-theme starter-kit-bindings starter-kit ido-ubiquitous undo-tree solarized-theme zenburn-theme jedi epc auto-complete projectile)))
+    (format-sql osx-plist soft-charcoal-theme sx ace-window switch-window hc-zenburn-theme minimap markdown-mode markdown-mode+ markdown-toc avy json-mode ess jedi-direx deft ess-R-data-view ess-R-object-popup naquadah-theme leuven-theme starter-kit-bindings starter-kit ido-ubiquitous undo-tree solarized-theme zenburn-theme jedi epc auto-complete projectile)))
+ '(paradox-automatically-star nil)
  '(size-indication-mode t)
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(vc-follow-symlinks t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

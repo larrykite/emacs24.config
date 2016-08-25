@@ -1,6 +1,9 @@
 ;; Keyboard
 ;; ============
 ;;
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "C-c a") 'auto-fill-mode)
 (global-set-key (kbd "C-<backspace>") (lambda ()
                                         (interactive)
@@ -33,13 +36,10 @@
 (global-set-key (kbd "C-`") 'push-mark-no-activate)
 (global-set-key (kbd "M-`") 'jump-to-mark)
 (global-set-key (kbd "C-S-v") 'scroll-down-command)
+
 (global-set-key [C-tab]     'yic-next-buffer)
 (global-set-key [C-S-tab]     'yic-prev-buffer)
 
-;; (global-set-key [home] 'beginning-of-line)
-;; (global-set-key [end] 'end-of-line)
-;; (global-set-key [C-home] 'beginning-of-buffer)
-;; (global-set-key [C-end] 'end-of-buffer)
 (global-set-key (kbd "C-c c") 'comment-region)   ;; make C-c C-c and C-c C-u work
 (global-set-key (kbd "C-c C-c") 'comment-region) ;; make C-c C-c and C-c C-u work
 (global-set-key (kbd "C-c m") 'remember)
@@ -52,7 +52,7 @@
 (global-set-key (kbd "C-x y") 'upcase-word)
 
 ;; Meta
-(global-set-key "\M- " 'set-mark-command)
+;; (global-set-key "\M- " 'set-mark-command) ;; commented-out shadowed by Alfred activate Mac OS system keybinding
 (global-set-key "\M-\C-h" 'backward-kill-word)
 (global-set-key "\M-\C-r" 'query-replace)
 (global-set-key "\M-r" 'replace-string)
@@ -66,19 +66,11 @@
 ;;(global-set-key [f4] 'advertised-undo)
 (global-set-key [f5] "\C-u1\C-v")
 (global-set-key [f6] "\C-u1\M-v")
-;;(global-set-key [f7] 'other-window)
+(global-set-key [f7] 'other-window)
 ;;(global-set-key [f8] 'find-file)
 (global-set-key [f9] 'kmacro-start-macro-or-insert-counter)
-;;(global-set-key [f10] 'next-error)
-(global-set-key [f11] 'fullscreen)
+;; (global-set-key [f11] 'fullscreen) ;; commented-out: shadowed by Mac OS show desktop command
 (global-set-key [f12] 'grep)
-;;(global-set-key [C-f1] 'compile)
-;;(global-set-key [C-f2] 'grep)
-;;(global-set-key [C-f3] 'next-error)
-;;(global-set-key [C-f4] 'previous-error)
-;;(global-set-key [C-f5] 'display-faces)
-;;(global-set-key [C-f8] 'dired)
-;;(global-set-key [C-f10] 'kill-compilation)
 
 ;; Keypad bindings
 (global-set-key [up] "\C-p")
@@ -105,7 +97,6 @@
 (global-set-key "\M-I" 'kill-word)
 (global-set-key "\M-U" 'kill-start-of-line)
 (global-set-key "\M-E" 'kill-line)
-(global-set-key "\C-cm" 'toggle-menu-bar-mode-from-frame)
 
 ;; disable kill-emacs and minimize window if emacs started in daemon mode
 (if (daemonp)
@@ -130,19 +121,6 @@ Don't mess with special buffers."
       (kill-buffer buffer))))
 
 (global-set-key (kbd "C-c k") 'kill-other-buffers)
-
-;; (defun visit-term-buffer ()
-;;   "Create or visit a terminal buffer."
-;;   (interactive)
-;;   (if (not (get-buffer "*ansi-term*"))
-;;       (progn
-;;         (split-window-sensibly (selected-window))
-;;         (other-window 1)
-;;         (ansi-term (getenv "SHELL")))
-;;     (switch-to-buffer-other-window "*ansi-term*")))
-
-;;(global-set-key (kbd "C-c t") 'visit-term-buffer)
-
 
 (defun google ()
   "Google the selected region if any, display a query prompt otherwise."
@@ -196,5 +174,5 @@ Position the cursor at its beginning, according to the current mode."
 ;; Fixing a key binding bug in elpy
 ;;(define-key yas-minor-mode-map (kbd "C-c ;") 'yas-expand)
 ;; Fixing another key binding bug in iedit mode
-(define-key global-map (kbd "C-c o") 'iedit-mode)
+;; (define-key global-map (kbd "C-c o") 'iedit-mode)
 (global-set-key (kbd "C-x o") 'switch-window)
