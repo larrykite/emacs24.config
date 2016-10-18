@@ -37,6 +37,7 @@
                          ein
                          elpy
                          ess
+                         flycheck
                          idle-highlight-mode
                          ido-ubiquitous
                          jedi
@@ -100,6 +101,8 @@
 (setq recentf-max-saved-items 200
       recentf-max-menu-items 15)
 (recentf-mode +1)
+
+(global-flycheck-mode)
 
 (global-hl-line-mode +1)
 
