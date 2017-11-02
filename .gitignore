@@ -29,3 +29,8 @@ savefile/
 projectile-bookmarks.eld
 .\#*
 .python-environments/
+*.tgz
+.DS_Store
+.sx/
+abbrev_defs
+smex-items
