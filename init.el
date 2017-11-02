@@ -23,6 +23,7 @@
              '("elpy" . "http://jorgenschaefer.github.io/packages/"))
 
 (package-initialize)
+
 (defvar local-packages '(
                          auto-complete
                          avy
@@ -58,6 +59,7 @@
                          use-package
                          which-key
                          zenburn-theme
+                         exec-path-from-shell
                          )
   "A list of packages to ensure are installed at launch.")
 
@@ -77,8 +79,10 @@
       (dolist (p need-to-install)
         (package-install p)))))
 
+
+(elpy-enable)
 (load-theme 'naquadah t)
-(require 'ess-site)
+;; (require 'ess-site)
 ;; (require 'ensime)
 ;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 (setq undo-tree-mode-lighter "")
@@ -102,7 +106,7 @@
       recentf-max-menu-items 15)
 (recentf-mode +1)
 
-(global-flycheck-mode)
+;; (global-flycheck-mode)
 
 (global-hl-line-mode +1)
 
@@ -123,6 +127,16 @@
       (assq-delete-all 'which-func-mode mode-line-misc-info))
 
 (setq column-number-mode t)
+(which-key-mode)
+
+
+(key-chord-define-global "KE" 'kill-emacs)
+(key-chord-define-global "FF" 'find-file)
+(key-chord-define-global "jk" 'beginning-of-buffer)
+
+(key-chord-mode +1)
+
+
 
 ;; Global Jedi config vars
 
@@ -136,8 +150,8 @@ May be necessary for some GUI environments (e.g., Mac OS X)"
 (defvar jedi-config:vcs-root-sentinel ".git")
 
 (defvar jedi-config:python-module-sentinel "__init__.py")
-(setq paradox-github-token "33d0493fada13cfff961622d2395ff1f2349ab89")
-;; Helper functions
+
+(setq paradox-github-token "437628cb8c9f5b064a1ca3b83eacaea7378304a5")
 
 ;; Small helper to scrape text from shell output
 (defun get-shell-output (cmd)
@@ -147,150 +161,14 @@ May be necessary for some GUI environments (e.g., Mac OS X)"
 ;; Necessary on some environments without virtualenv
 ;; Taken from: http://stackoverflow.com/questions/8606954/path-and-exec-path-set-but-emacs-does-not-find-executable
 
+(exec-path-from-shell-initialize)
+
 (defun set-exec-path-from-shell-PATH ()
   "Set up Emacs' `exec-path' and PATH environment variable to match that used by the user's shell."
   (interactive)
   (let ((path-from-shell (get-shell-output "$SHELL --login -i -c 'echo $PATH'")))
     (setenv "PATH" path-from-shell)
     (setq exec-path (split-string path-from-shell path-separator))))
-
-;; Package specific initialization
-(add-hook
- 'after-init-hook
- '(lambda ()
-
-    ;; Looks like you need Emacs 24 for projectile
-    (unless (< emacs-major-version 24)
-      (require 'projectile)
-      (projectile-global-mode))
-
-    ;; Auto-complete
-    (require 'auto-complete-config)
-    (ac-config-default)
-
-    ;; Uncomment next line if you like the menu right away
-    (setq ac-show-menu-immediately-on-auto-complete t)
-
-    ;; Can also express in terms of ac-delay var, e.g.:
-    ;;   (setq ac-auto-show-menu (* ac-delay 2))
-
-    ;; Jedi
-    (require 'jedi)
-
-    ;; (Many) config helpers follow
-
-    ;; Alternative methods of finding the current project root
-    ;; Method 1: basic
-    (defun get-project-root (buf repo-file &optional init-file)
-      "Just uses the vc-find-root function to figure out the project root.
-       Won't always work for some directory layouts."
-      (let* ((buf-dir (expand-file-name (file-name-directory (buffer-file-name buf))))
-             (project-root (vc-find-root buf-dir repo-file)))
-        (if project-root
-            (expand-file-name project-root)
-          nil)))
-
-    ;; Method 2: slightly more robust
-    (defun get-project-root-with-file (buf repo-file &optional init-file)
-      "Guesses that the python root is the less 'deep' of either:
-         -- the root directory of the repository, or
-         -- the directory before the first directory after the root
-            having the init-file file (e.g., '__init__.py'."
-
-      ;; make list of directories from root, removing empty
-      (defun make-dir-list (path)
-        (delq nil (mapcar (lambda (x) (and (not (string= x "")) x))
-                          (split-string path "/"))))
-      ;; convert a list of directories to a path starting at "/"
-      (defun dir-list-to-path (dirs)
-        (mapconcat 'identity (cons "" dirs) "/"))
-      ;; a little something to try to find the "best" root directory
-      (defun try-find-best-root (base-dir buffer-dir current)
-        (cond
-         (base-dir ;; traverse until we reach the base
-          (try-find-best-root (cdr base-dir) (cdr buffer-dir)
-                              (append current (list (car buffer-dir)))))
-
-         (buffer-dir ;; try until we hit the current directory
-          (let* ((next-dir (append current (list (car buffer-dir))))
-                 (file-file (concat (dir-list-to-path next-dir) "/" init-file)))
-            (if (file-exists-p file-file)
-                (dir-list-to-path current)
-              (try-find-best-root nil (cdr buffer-dir) next-dir))))
-
-         (t nil)))
-
-      (let* ((buffer-dir (expand-file-name (file-name-directory (buffer-file-name buf))))
-             (vc-root-dir (vc-find-root buffer-dir repo-file)))
-        (if (and init-file vc-root-dir)
-            (try-find-best-root
-             (make-dir-list (expand-file-name vc-root-dir))
-             (make-dir-list buffer-dir)
-             '())
-          vc-root-dir))) ;; default to vc root if init file not given
-
-    ;; Set this variable to find project root
-    (defvar jedi-config:find-root-function 'get-project-root-with-file)
-
-    (defun current-buffer-project-root ()
-      (funcall jedi-config:find-root-function
-               (current-buffer)
-               jedi-config:vcs-root-sentinel
-               jedi-config:python-module-sentinel))
-
-    (defun jedi-config:setup-server-args ()
-      ;; little helper macro for building the arglist
-      (defmacro add-args (arg-list arg-name arg-value)
-        `(setq ,arg-list (append ,arg-list (list ,arg-name ,arg-value))))
-      ;; and now define the args
-      (let ((project-root (current-buffer-project-root)))
-
-        (make-local-variable 'jedi:server-args)
-
-        (when project-root
-          (message (format "Adding system path: %s" project-root))
-          (add-args jedi:server-args "--sys-path" project-root))
-
-        (when jedi-config:with-virtualenv
-          (message (format "Adding virtualenv: %s" jedi-config:with-virtualenv))
-          (add-args jedi:server-args "--virtual-env" jedi-config:with-virtualenv))))
-
-    ;; Use system python
-    (defun jedi-config:set-python-executable ()
-      (set-exec-path-from-shell-PATH)
-      (make-local-variable 'jedi:server-command)
-      (set 'jedi:server-command
-           (list (executable-find "python") ;; may need help if running from GUI
-                 (cadr default-jedi-server-command))))
-
-    ;; Now hook everything up
-    ;; Hook up to autocomplete
-    (add-to-list 'ac-sources 'ac-source-jedi-direct)
-
-    ;; Enable Jedi setup on mode start
-    (add-hook 'python-mode-hook 'jedi:setup)
-
-    ;; Buffer-specific server options
-    (add-hook 'python-mode-hook
-              'jedi-config:setup-server-args)
-    (when jedi-config:use-system-python
-      (add-hook 'python-mode-hook
-                'jedi-config:set-python-executable))
-
-    ;; And custom keybindings
-    (defun jedi-config:setup-keys ()
-      (local-set-key (kbd "M-.") 'jedi:goto-definition)
-      (local-set-key (kbd "M-,") 'jedi:goto-definition-pop-marker)
-      (local-set-key (kbd "M-?") 'jedi:show-doc)
-      (local-set-key (kbd "M-/") 'jedi:get-in-function-call))
-
-    ;; Don't let tooltip show up automatically
-    (setq jedi:get-in-function-call-delay 10000000)
-    ;; Start completion at method dot
-    (setq jedi:complete-on-dot t)
-    ;; Use custom keybinds
-    (add-hook 'python-mode-hook 'jedi-config:setup-keys)
-    ))
 
 (defalias 'qrr 'query-replace-regexp)
 (defadvice show-paren-function
@@ -310,10 +188,34 @@ May be necessary for some GUI environments (e.g., Mac OS X)"
 ;; being added.
 
 (setq load-path (remove "." load-path))
-(eval-after-load "python"
-  '(define-key python-mode-map "\C-cx" 'jedi-direx:pop-to-buffer))
-(add-hook 'jedi-mode-hook 'jedi-direx:setup)
+;; (eval-after-load "python"
+;;  '(define-key python-mode-map "\C-cx" 'jedi-direx:pop-to-buffer))
+;; (add-hook 'jedi-mode-hook 'jedi-direx:setup)
 (setq magit-last-seen-setup-instructions "1.4.0")
 (global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
 (global-set-key (kbd "s-.") 'avy-goto-word-or-subword-1)
 (global-set-key (kbd "s-w") 'ace-window)
+
+;; nearly all of this is the default layout
+(setq ibuffer-formats
+      '((mark modified read-only " "
+              (name 30 30 :left :elide) ; change: 30s were originally 18s
+              " "
+              (size 9 -1 :right)
+              " "
+              (mode 16 16 :left :elide)
+              " " filename-and-process)
+        (mark " "
+              (name 16 -1)
+              " " filename)))
+
+
+(setq scroll-margin 0
+      scroll-conservatively 100000
+      scroll-preserve-screen-position 1)
+(delete-selection-mode t)
+(global-auto-revert-mode t)
+(defalias 'workon 'pyvenv-workon)
+
+(provide 'init)
+;;; init.el ends here
